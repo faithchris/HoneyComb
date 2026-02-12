@@ -1,5 +1,11 @@
 import Timer from "./Timer/Timer";
 
-export default function App() {
-  return </Timer />;
+function App() {
+  return (
+    <div className="App">
+    <Timer duration = {1500000} />
+    </div>
+  );
 }
+
+export default App;

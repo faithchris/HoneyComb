@@ -1,0 +1,34 @@
+$pc-dawn: #fffaef;
+$pc-white: #ffe9be;
+$pc-voodoo: #4b2f53;
+$pc-brown: #532f2f;
+$pc-flamingo: #f28a2f;
+$pc-sun: #ffd341;
+$font-one: pacifico;
+$font-two: milonga; 
+
+@mixin center-flex{
+    display: flex;
+    justify-content: center; //centers horizontally
+    align-items: center; //centers vertically
+}
+
+#custom-timer{
+    color: $pc-brown;
+    font: 100% $font-one;
+    height: 475px; //a defined height is neccessary for vertical centering
+    @include center-flex;
+    font-size: 150px;
+    border-radius: 475px;
+    background-color: $pc-sun;
+
+}
+
+#Start {
+    background-color: $pc-dawn;
+    color: $pc-brown;
+    padding-left: 200px;
+    position: relative;
+   
+
+}
