@@ -1,0 +1,273 @@
+$yellow: #FFD341;
+
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'Calistoga', sans-serif;
+    box-sizing: border-box;
+}
+
+/* Todo List Title */
+h2 {
+    font-family: "Pacifico", cursive;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 40.679px;
+}
+/* Backdrop */
+.container{
+    // border: 10px solid black;
+    width: 100%;
+    min-height: 100vh;
+    // background: linear-gradient(135deg, #153677, #4e085f);
+    background: darkseagreen;
+    padding: 10px;
+}
+
+/* body {
+  --s: 52px; 
+  --c1: #ffe9be;
+  --c2: #fffaef;
+  
+  --c:#0000,var(--c1) .5deg 119.5deg,#0000 120deg;
+  --g1:conic-gradient(from  60deg at 56.25% calc(425%/6),var(--c));
+  --g2:conic-gradient(from 180deg at 43.75% calc(425%/6),var(--c));
+  --g3:conic-gradient(from -60deg at 50%   calc(175%/12),var(--c));
+  background:
+    var(--g1),var(--g1) var(--s) calc(1.73*var(--s)),
+    var(--g2),var(--g2) var(--s) calc(1.73*var(--s)),
+    var(--g3) var(--s) 0,var(--g3) 0 calc(1.73*var(--s)) 
+    var(--c2);
+  background-size: calc(2*var(--s)) calc(3.46*var(--s));
+} */
+
+
+
+
+/* todo app container */
+.todo-app{
+    // border: 10px solid black;
+    position: relative;
+    width: 100%;
+    max-width: 540px;
+    background: #FFFAEF;
+    margin: 100px auto 20px;
+    padding: 40px 30px 70px;
+    border-radius: 10px;
+    outline: #532F2F dashed 6px;
+    box-shadow:  0 0 0 19.32px $yellow;  /* Outer blue "outline", total width 12px */
+}
+/* Todo list Backround - If the background image had to repeat as it grew*/
+.todo-app{
+    background-image: url('images/Hive_Pattern.png');
+    background-position: top right;
+    background-repeat:repeat-y;
+    background-size: 540.518px  439.838px;
+    height: auto;
+} 
+
+/* List Box */
+#list-container{
+    /* border: 3px solid black; */
+    overflow:scroll;
+    width: 490px;
+    height: 200px;
+}
+/* Container box for bee and title */
+.title{
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    gap: 12px;
+    /* border: 3px solid black; */
+}
+/* ToDo List Title */
+.title h2{
+    color: #4B2F53;
+    margin-bottom: 20px;
+    /* border: 3px solid black; */
+}
+/* Bee */
+.title img{
+    position: absolute;
+    left: 50%;
+    transform: translateX(-300px) translateY(-90px);
+    /* width: 197.8px;
+    height: 161.703px; */
+    width: 439.873px;
+    /* border: 3px solid black; */
+}
+
+/* Add your text backdrop */
+.row{
+    // border: 10px solid black;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #FFE9BE;
+    border-radius: 30px;
+    padding-left: 20px;
+    margin-bottom: 25px;
+}
+
+/* input section where you type your task. */
+input{
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    padding: 10px;
+    font-weight: 14px;
+    font-size: 17.797px;
+    color: #532F2F
+}
+
+/* Add task button */
+button{
+    border:none;
+    outline:none;
+    padding: 16px 50px;
+    background: #F28A2F;
+    color: #fff;
+    font-size: 17.797px;
+    cursor: pointer;
+    border-radius: 40px;
+}
+
+/* List Item */
+ol li{
+    list-style:none;
+    font-size: 20.339px;
+    padding: 12px 8px 12px 50px;
+    user-select: none;
+    cursor: pointer;
+    position: relative;
+    color: #532F2F;
+}
+/* Unfilled circle */
+#list-container li::before{
+    content: '';
+    position: absolute;
+    height: 28px;
+    width: 28px;
+    border-radius: 50%;
+    background-image: url(images/Unfilled-Circle.png);
+    background-size: cover;
+    background-position: center;
+    top: 12px;
+    left: 8px;
+
+}
+/* Line through the word */
+#list-container li.checked{
+    color: #ADA4AF;
+    text-decoration: line-through;
+    text-decoration-color:#532F2F;
+}
+/* Filled */
+#list-container li.checked::before{
+    background-image: url(images/Checked-Circle.png);
+}
+
+/* Actual X Button */
+#list-container li span{
+    position: absolute;
+    right: 0;
+    top: 5px;
+    width: 40px;
+    height: 40px;
+    font-size: 22px;
+    color: #4B2F53;
+    line-height: 40px;
+    text-align: center;
+    border-radius: 50%;
+}
+
+/* X button hover color */
+#list-container li span:hover{
+    background: #edeef0;
+}
+
+// Container Side Decorations
+.side-decor{
+    // border: 10px solid black;
+    position: relative;
+}
+
+.side-decor img{
+    // border: 10px solid black;
+    position: absolute;
+    display:block;
+}
+
+#drip1 {
+	// display: block;
+	// position: absolute;
+    width: 95px;
+    height: 60px;
+	left: -1%;
+	bottom: -8.5rem;
+}
+#drip2 {
+    // display: block;
+	// position: absolute;
+    width: 88px;
+    height: 35px;
+	left: 45%;
+	bottom: -7.1rem;
+}
+#drip3 {
+    // display: block;
+	// position: absolute;
+    width: 62px;
+    height: 61px;
+	left: 87%;
+	bottom: -8.8rem;
+}
+
+#left-drip{
+    width: 35px;
+    height: 64px;
+    left: -15%;
+	top: -12rem;
+}
+
+#left-flower{
+    width: 63px;
+    height: 64px;
+    left: -19%;
+	top: -0.8rem;
+    transform: rotate(-25deg);
+}
+
+#two-flowers {
+    width: 107px;
+    height: 128px;
+    left: 80%;
+	top: -31rem;
+}
+
+#right-drip {
+    width: 30px;
+    height: 60px;
+    left: 109.5%;
+	bottom: 19rem;
+    transform: rotate(4deg);
+}
+
+#purple-flower {
+    width: 49px;
+    height: 50px;
+    left: 105.5%;
+	bottom: 8.5rem;
+    transform: rotate(-18deg);
+}
+
+#white-flower {
+    width: 113px;
+    height: 213px;
+    left: 103.6%;
+	bottom: -4.75rem;
+}
