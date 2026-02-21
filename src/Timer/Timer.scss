@@ -4,6 +4,7 @@ $pc-voodoo: #4b2f53;
 $pc-brown: #532f2f;
 $pc-flamingo: #f28a2f;
 $pc-sun: #ffd341;
+$pc-green: #728972;
 $font-one: pacifico;
 $font-two: milonga; 
 
@@ -13,22 +14,299 @@ $font-two: milonga;
     align-items: center; //centers vertically
 }
 
-#custom-timer{
-    color: $pc-brown;
-    font: 100% $font-one;
-    height: 475px; //a defined height is neccessary for vertical centering
-    @include center-flex;
-    font-size: 150px;
-    border-radius: 475px;
-    background-color: $pc-sun;
+#page{
+    min-height: 100vh;
+    background: $pc-green;
 
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-#Start {
-    background-color: $pc-dawn;
-    color: $pc-brown;
-    padding-left: 200px;
+#timerDisplayYellow{
+    background: $pc-sun;
+    padding: 20px;
+    border-radius: 20px;
+    height: 400px;
+    width: 500px;
+}
+
+#timerDisplayWhite{
+    background: $pc-dawn;
+    border-radius: 20px;
+    padding: 40px 50px;
+    min-width: 400px;
+    height: 320px;
+    outline: 5px dashed $pc-brown;
+    outline-offset: 2px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     position: relative;
-   
 
 }
+
+#custom-timer{
+    font-size: 4.5rem;
+    font-weight: 600;
+    color: $pc-brown;
+    letter-spacing: 2px;
+    text-align: center;
+    margin: 70px 0;
+}
+
+#timer-controls{
+    display: flex;
+    gap: 16px;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+
+#Start{
+    background: $pc-flamingo;
+    color: white;
+    border: none;
+    padding: 12px 28px;
+    border-radius: 25px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+}
+
+#Start:hover{
+    background: $pc-sun;
+    transform: translateY(-2px);
+}
+
+#Start:active{
+    transform: translateY(0);
+}
+
+#Reset{
+    background: $pc-flamingo;
+    color: white;
+    border: none;
+    padding: 12px 28px;
+    border-radius: 25px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+}
+
+#Reset:hover{
+    background: $pc-sun;
+    transform: translateY(-2px);
+}
+
+#Reset:active{
+    transform: translateY(0);
+}
+
+#running-reset{
+    background: $pc-flamingo;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    padding: 12 px 28px;
+    font-size: 1 rem;
+    font-weight: 600;
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+}
+
+#running-reset:hover{
+    background: $pc-sun;
+    transform: translateY(-2px);
+
+}
+
+#running-reset:active{
+    transform: translateY(0);
+}
+
+#Pause{
+    background: $pc-flamingo;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    padding: 12px 36px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+
+    transition: transform 0.15s ease;
+}
+
+#Pause:hover{
+    transform: translateY(2px);
+    background: $pc-sun;
+
+}
+
+#Pause:active{
+    transform: translateY(0px);
+}
+
+#Resume{
+    background: $pc-sun;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    padding: 12px 36px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+
+    transition: transform 0.15s ease;
+}
+
+#Resume:hover{
+    transform: translateY(2px);
+    background: $pc-flamingo;
+
+}
+
+#Resume:active{
+    transform: translateY(0px);
+}
+
+#Stop{
+    background: $pc-flamingo;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    padding: 12px 36px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+
+    transition: transform 0.15s ease;
+}
+
+#Stop:hover{
+    transform: translateY(-2px);
+    background: $pc-sun;
+}
+
+#Stop:active{
+    transform: translateY(0px);
+}
+
+
+#Focus{
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: $pc-white;
+    color: white;
+    border: 2px solid $pc-sun;
+    border-radius: 25px;
+    padding: 6px 18px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+
+    transition: all 0.15s ease;
+}
+
+#Focus:hover{
+    background: $pc-sun;
+}
+
+.Modal{
+    position: fixed;
+    inset: 0; //same as top:0; left:0; right:0; bottom:0;
+
+    background: rgba(0, 0, 0, 0.4); //dims background
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    z-index: 1000;
+} // pulls it off the bottom of the page, centers it, and darkens background
+
+.ModalBox{
+    background: $pc-dawn;
+
+    padding: 50px 30px;
+    border-radius: 30px;
+
+    width: 500px;
+    max-width: 90%;
+
+    text-align: center;
+    position: relative;
+
+    border: 12px solid $pc-sun;
+    outline: 5px dashed $pc-brown;
+    outline-offset: -11px;
+}
+
+.ModalBox p {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 40px;
+}
+
+.ModalButtons {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    padding-bottom: 10px;
+
+}
+
+#backButtonWrapper{
+    position: absolute;
+    bottom: -69px;
+    left: -60px;
+    background: none;
+    border: none;
+    cursor: pointer;
+
+}
+
+#backButtonWrapper img{
+    width: 160px;
+    height: 140px;
+}
+
+#sadBee{
+     position: absolute;
+    background: none;
+    border: none;
+    cursor: pointer;
+    width: 200px;
+    transform: translate(-70%, -80%);
+    
+}
+
+#twoFlowers{
+     position: absolute;
+    background: none;
+    border: none;
+    cursor: pointer;
+    width: 100px;
+    transform: translate(180%, 90%);
+    
+}
+
+#beeLine{
+     position: absolute;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transform: translate(20%, -230%);
+    width: 250px;
+}
+
+
+
