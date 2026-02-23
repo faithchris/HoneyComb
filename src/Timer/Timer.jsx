@@ -1,4 +1,5 @@
 import "./Timer.scss"; //imports the timer SCSS file
+import { supabase } from "../lib/supabaseClient"; //imports the supabase client for database interactions (not currently used in this component but may be used for future features like saving timer data)
 
 import  { useState, useEffect } from "react"; // import react hooks: 
 //useState -> to store changing values (time)
@@ -10,6 +11,7 @@ export default function Timer({ duration }){ //defines the Timer component and r
                                                 //'setTime' is used to update the times as it counts down
 
     useEffect(() => { //runs this effect every time 'time' changes
+        console.log("Supabase object:", supabase);
         if (time <=0) return; //stops the timer
         setTimeout(() => { //waits 1000 milliseconds (1 second)
             setTime(time-1000) //decreases the current time by 1 second
