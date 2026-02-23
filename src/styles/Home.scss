@@ -1,0 +1,31 @@
+$eggshell: #FFFAEF;
+$cream: #FFE9BE;
+$royal: #4B2F53;
+$sunrise: #F28A2F;
+$honey: #FFD341;
+$chocolate: #532F2F;
+$darkbrown: #23150A;
+$seafoam: #728972;
+$mint: darkseagreen;
+$mist: #ADA4AF;
+
+
+.Home_Style{
+    background-image: url("./images/Temp_Hive.PNG"); 
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    .container{
+        width: 100%;
+        min-height: 100vh;
+        // background: darkseagreen;
+        padding: 10px;
+        
+    }
+    .container img{
+        width: 100%;
+        min-height: 100vh;
+        padding: 10px;
+    }
+
+}

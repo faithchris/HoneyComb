@@ -1,0 +1,21 @@
+$eggshell: #FFFAEF;
+$cream: #FFE9BE;
+$royal: #4B2F53;
+$sunrise: #F28A2F;
+$honey: #FFD341;
+$chocolate: #532F2F;
+$darkbrown: #23150A;
+$seafoam: #728972;
+$mint: darkseagreen;
+$mist: #ADA4AF;
+
+
+:root {
+  background-color: $mint;
+}
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  background-color: $mint;
+}
