@@ -1,0 +1,285 @@
+.Todo_Style * {
+  margin: 0;
+  padding: 0;
+  font-family: "Calistoga", sans-serif;
+  box-sizing: border-box;
+}
+.Todo_Style {
+  /* Todo List Title */
+}
+.Todo_Style h2 {
+  font-family: "Pacifico", cursive;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 40.679px;
+}
+.Todo_Style {
+  /* Backdrop */
+}
+.Todo_Style .container {
+  width: 100%;
+  min-height: 100vh;
+  height: 100%;
+  background: darkseagreen;
+  padding: 10px;
+}
+.Todo_Style {
+  /* body {
+  --s: 52px; 
+  --c1: #ffe9be;
+  --c2: #fffaef;
+
+  --c:#0000,var(--c1) .5deg 119.5deg,#0000 120deg;
+  --g1:conic-gradient(from  60deg at 56.25% calc(425%/6),var(--c));
+  --g2:conic-gradient(from 180deg at 43.75% calc(425%/6),var(--c));
+  --g3:conic-gradient(from -60deg at 50%   calc(175%/12),var(--c));
+  background:
+      var(--g1),var(--g1) var(--s) calc(1.73*var(--s)),
+      var(--g2),var(--g2) var(--s) calc(1.73*var(--s)),
+      var(--g3) var(--s) 0,var(--g3) 0 calc(1.73*var(--s)) 
+      var(--c2);
+  background-size: calc(2*var(--s)) calc(3.46*var(--s));
+  } */
+  /* todo app container */
+}
+.Todo_Style .todo-app {
+  position: relative;
+  width: 100%;
+  max-width: 540px;
+  min-width: 300px;
+  background: #FFFAEF;
+  margin: 100px auto 20px;
+  padding: 40px 30px 70px;
+  border-radius: 10px;
+  outline: #532F2F dashed 6px;
+  box-shadow: 0 0 0 19.32px #FFD341; /* Outer blue "outline", total width 12px */
+}
+.Todo_Style {
+  /* Todo list Backround - If the background image had to repeat as it grew*/
+}
+.Todo_Style .todo-app {
+  background-image: url("images/Hive_Pattern.png");
+  background-position: top right;
+  background-repeat: repeat-y;
+  background-size: 540.518px 439.838px;
+  height: auto;
+}
+.Todo_Style {
+  /* List Box */
+}
+.Todo_Style #list-container {
+  /* border: 3px solid black; */
+  overflow: scroll;
+  width: 490px;
+  height: 200px;
+}
+.Todo_Style {
+  /* Container box for bee and title */
+}
+.Todo_Style .title {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 12px;
+  /* border: 3px solid black; */
+}
+.Todo_Style {
+  /* ToDo List Title */
+}
+.Todo_Style .title h2 {
+  color: #4B2F53;
+  margin-bottom: 20px;
+  /* border: 3px solid black; */
+}
+.Todo_Style {
+  /* Bee */
+}
+.Todo_Style .title img {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-300px) translateY(-90px);
+  /* width: 197.8px;
+  height: 161.703px; */
+  width: 439.873px;
+  /* border: 3px solid black; */
+}
+.Todo_Style {
+  /* Add your text backdrop */
+}
+.Todo_Style .row {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  background: #FFE9BE;
+  border-radius: 30px;
+  padding-left: 20px;
+  margin-bottom: 25px;
+}
+.Todo_Style {
+  /* input section where you type your task. */
+}
+.Todo_Style input {
+  flex: 1;
+  width: 75%;
+  border: none;
+  outline: none;
+  background: transparent;
+  padding: 10px;
+  font-weight: 14px;
+  font-size: 17.797px;
+  color: #532F2F;
+}
+.Todo_Style input::-moz-placeholder {
+  color: gray;
+}
+.Todo_Style input::placeholder {
+  color: gray;
+}
+.Todo_Style {
+  /* Add task button */
+}
+.Todo_Style button {
+  border: none;
+  outline: none;
+  padding: 16px 50px;
+  background: #F28A2F;
+  color: #fff;
+  font-size: 17.797px;
+  cursor: pointer;
+  border-radius: 40px;
+}
+.Todo_Style #list-container {
+  width: 100%;
+}
+.Todo_Style {
+  /* List Item */
+}
+.Todo_Style ol li {
+  list-style: none;
+  font-size: 20.339px;
+  padding: 12px 8px 12px 50px;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+  cursor: pointer;
+  position: relative;
+  color: #532F2F;
+}
+.Todo_Style {
+  /* Unfilled circle */
+}
+.Todo_Style #list-container li::before {
+  content: "";
+  position: absolute;
+  height: 28px;
+  width: 28px;
+  border-radius: 50%;
+  background-image: url(images/Unfilled-Circle.png);
+  background-size: cover;
+  background-position: center;
+  top: 12px;
+  left: 8px;
+}
+.Todo_Style {
+  /* Line through the word */
+}
+.Todo_Style #list-container li.checked {
+  color: #ADA4AF;
+  text-decoration: line-through;
+  text-decoration-color: #532F2F;
+}
+.Todo_Style {
+  /* Filled */
+}
+.Todo_Style #list-container li.checked::before {
+  background-image: url(images/Checked-Circle.png);
+}
+.Todo_Style {
+  /* Actual X Button */
+}
+.Todo_Style #list-container li span {
+  position: absolute;
+  right: 0;
+  top: 5px;
+  width: 40px;
+  height: 40px;
+  font-size: 22px;
+  color: #4B2F53;
+  line-height: 40px;
+  text-align: center;
+  border-radius: 50%;
+}
+.Todo_Style {
+  /* X button hover color */
+}
+.Todo_Style #list-container li span:hover {
+  background: #edeef0;
+}
+.Todo_Style .side-decor {
+  position: relative;
+}
+.Todo_Style .side-decor img {
+  position: absolute;
+  display: block;
+}
+.Todo_Style #drip1 {
+  width: 95px;
+  height: 60px;
+  left: -1%;
+  bottom: -8.5rem;
+}
+.Todo_Style #drip2 {
+  width: 88px;
+  height: 35px;
+  left: 45%;
+  bottom: -7.1rem;
+}
+.Todo_Style #drip3 {
+  width: 62px;
+  height: 61px;
+  left: 87%;
+  bottom: -8.8rem;
+}
+.Todo_Style #left-drip {
+  width: 35px;
+  height: 64px;
+  left: -73px;
+  top: -12rem;
+}
+.Todo_Style #left-flower {
+  width: 63px;
+  height: 64px;
+  left: -90px;
+  top: -0.8rem;
+  transform: rotate(-25deg);
+}
+.Todo_Style #two-flowers {
+  width: 107px;
+  height: 128px;
+  left: 80%;
+  top: -31rem;
+}
+.Todo_Style #right-drip {
+  width: 30px;
+  height: 60px;
+  left: 109.5%;
+  bottom: 19rem;
+  transform: rotate(4deg);
+}
+.Todo_Style #purple-flower {
+  width: 49px;
+  height: 50px;
+  left: 105.5%;
+  bottom: 8.5rem;
+  transform: rotate(-18deg);
+}
+.Todo_Style #white-flower {
+  width: 113px;
+  height: 213px;
+  left: 103.6%;
+  bottom: -4.75rem;
+}/*# sourceMappingURL=Todo.css.map */

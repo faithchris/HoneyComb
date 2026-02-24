@@ -1,0 +1,334 @@
+.Sign_In_Style {
+  background-color: darkseagreen;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Calistoga", sans-serif;
+}
+.Sign_In_Style .container {
+  display: flex;
+  flex-direction: column;
+  width: 75%;
+  background: #FFFAEF;
+  padding-bottom: 35px;
+  max-width: 540px;
+  min-width: 300px;
+  margin: 100px auto 100px auto;
+  overflow: visible;
+  border-radius: 10px;
+  outline: #532F2F dashed 6px;
+  box-shadow: 0 0 0 19.32px #FFD341;
+}
+.Sign_In_Style .container {
+  background-image: url("images/Hive_Pattern.png");
+  background-position: top right;
+  background-repeat: repeat-y;
+  background-size: 540.518px 439.838px;
+  height: auto;
+}
+.Sign_In_Style .header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 9px;
+  width: 100%;
+  margin-top: 30px;
+  flex-wrap: wrap;
+}
+.Sign_In_Style .text {
+  display: flex;
+  justify-content: center;
+  color: #4B2F53;
+  font-family: "Pacifico", cursive;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 40.679px;
+}
+.Sign_In_Style .subtitle {
+  display: flex;
+  justify-content: center;
+  padding-top: 10.6px;
+  width: 350px;
+  height: 20px;
+  border-radius: 9px;
+  color: #532F2F;
+  font-size: 18px;
+}
+.Sign_In_Style .inputs {
+  margin-top: 25px;
+  margin-left: 20px;
+  margin-right: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+.Sign_In_Style .input_box {
+  width: 100%;
+}
+.Sign_In_Style .input_box p {
+  color: #532F2F;
+  font-size: 18px;
+}
+.Sign_In_Style .input {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: auto;
+  width: 100%;
+  background: #FFE9BE;
+  border-radius: 40px;
+}
+.Sign_In_Style .input input {
+  position: relative;
+  height: 50px;
+  width: 400px;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #532F2F;
+  font-size: 18px;
+  font-family: "Calistoga", sans-serif;
+  flex: 1;
+}
+.Sign_In_Style .input i {
+  margin: 0px 30px;
+  font-size: 20px;
+  color: gray;
+}
+.Sign_In_Style .input2 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: auto;
+  width: 100%;
+  background: #FFE9BE;
+  border-radius: 40px;
+}
+.Sign_In_Style .input2 input {
+  position: relative;
+  height: 50px;
+  width: 336px;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #532F2F;
+  font-size: 18px;
+  font-family: "Calistoga", sans-serif;
+  flex: 1;
+}
+.Sign_In_Style .input2 i {
+  margin: 0px 30px;
+  font-size: 20px;
+  color: gray;
+}
+.Sign_In_Style .password-toggle-icon {
+  margin-left: 15px;
+  margin-right: 20px;
+  font-size: 20px;
+  color: gray;
+  cursor: pointer;
+}
+.Sign_In_Style .forgot-container {
+  display: flex;
+  margin: 15px auto;
+  font-size: 16.5px;
+  width: 100%;
+}
+.Sign_In_Style .remember-password {
+  padding-left: 10px;
+  display: flex;
+  color: #532F2F;
+}
+.Sign_In_Style input[type=checkbox] {
+  accent-color: #F28A2F;
+}
+.Sign_In_Style .forgot-password {
+  margin-left: 47%;
+  display: flex;
+}
+.Sign_In_Style .forgot-password a:link {
+  color: #F28A2F;
+  background-color: transparent;
+  text-decoration: none;
+}
+.Sign_In_Style .forgot-password a:hover {
+  color: orangered;
+  background-color: transparent;
+  text-decoration: underline;
+}
+.Sign_In_Style .submit-container {
+  display: flex;
+  justify-content: center;
+  margin: 30px;
+}
+.Sign_In_Style .submit {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 240px;
+  height: 52px;
+  color: white;
+  background: #F28A2F;
+  border-radius: 50px;
+  font-size: 19px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 8px 6px 0 rgba(0, 0, 0, 0.25);
+}
+.Sign_In_Style .page-change {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+.Sign_In_Style .Sign-Up span {
+  color: #F28A2F;
+  cursor: pointer;
+  font-weight: 600;
+}
+.Sign_In_Style .Login span {
+  color: #F28A2F;
+  cursor: pointer;
+  font-weight: 600;
+}
+.Sign_In_Style .Sign-Up span:hover {
+  color: orangered;
+  background-color: transparent;
+  text-decoration: underline;
+}
+.Sign_In_Style .Login span:hover {
+  color: orangered;
+  background-color: transparent;
+  text-decoration: underline;
+}
+.Sign_In_Style .Sign-Up {
+  margin-top: 16px;
+  color: #ADA4AF;
+  font-size: 17px;
+  text-align: left;
+}
+.Sign_In_Style .Login {
+  margin-top: 16px;
+  color: #ADA4AF;
+  font-size: 17px;
+  text-align: left;
+}
+.Sign_In_Style .side-decor {
+  position: relative;
+}
+.Sign_In_Style .side-decor img {
+  position: absolute;
+  display: block;
+}
+.Sign_In_Style #drip1 {
+  width: 95px;
+  height: 60px;
+  left: 5%;
+  bottom: -6.3rem;
+}
+.Sign_In_Style #drip3 {
+  width: 62px;
+  height: 61px;
+  left: 45%;
+  bottom: -6.5rem;
+}
+.Sign_In_Style #drip2 {
+  width: 88px;
+  height: 35px;
+  left: 78%;
+  bottom: -4.9rem;
+}
+.Sign_In_Style #right-drip {
+  width: 30px;
+  height: 60px;
+  left: 102.5%;
+  bottom: 48rem;
+  transform: rotate(4deg);
+}
+.Sign_In_Style #left-drip {
+  width: 35px;
+  height: 64px;
+  left: -8%;
+  top: -45rem;
+}
+.Sign_In_Style #left-flower {
+  width: 122.764px;
+  height: 148.944px;
+  left: -18.5%;
+  top: -30rem;
+}
+.Sign_In_Style #two-flowers {
+  width: 107px;
+  height: 128px;
+  left: 78%;
+  top: -60.5rem;
+}
+.Sign_In_Style #right-flower {
+  width: 135px;
+  height: 283px;
+  left: 96.5%;
+  bottom: 7.75rem;
+}
+.Sign_In_Style #right-drip {
+  width: 30px;
+  height: 60px;
+  left: 102.5%;
+  bottom: 48rem;
+  transform: rotate(4deg);
+}
+.Sign_In_Style #left-drip {
+  width: 35px;
+  height: 64px;
+  left: -8%;
+  top: -45rem;
+}
+.Sign_In_Style #left-flower {
+  width: 122.764px;
+  height: 148.944px;
+  left: -18.5%;
+  top: -30rem;
+}
+.Sign_In_Style #two-flowers {
+  width: 107px;
+  height: 128px;
+  left: 78%;
+  top: -60.5rem;
+}
+.Sign_In_Style #right-flower {
+  width: 135px;
+  height: 283px;
+  left: 96.5%;
+  bottom: 7.75rem;
+}
+.Sign_In_Style #right-drip-2 {
+  width: 30px;
+  height: 60px;
+  left: 102.5%;
+  bottom: 15rem;
+  transform: rotate(4deg);
+}
+.Sign_In_Style #left-drip-2 {
+  width: 35px;
+  height: 64px;
+  left: -8%;
+  top: -28rem;
+}
+.Sign_In_Style #left-flower-2 {
+  width: 122.764px;
+  height: 148.944px;
+  left: -18.5%;
+  top: -14rem;
+}
+.Sign_In_Style #two-flowers-2 {
+  width: 107px;
+  height: 128px;
+  left: 70%;
+  top: -43.5rem;
+}
+.Sign_In_Style #right-flower-2 {
+  width: 135px;
+  height: 283px;
+  left: 96.5%;
+  bottom: -2.75rem;
+}/*# sourceMappingURL=Sign_In.css.map */

@@ -1,0 +1,15 @@
+.Home_Style {
+  background-image: url("./images/Temp_Hive.PNG");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.Home_Style .container {
+  width: 100%;
+  min-height: 100vh;
+  padding: 10px;
+}
+.Home_Style .container img {
+  width: 100%;
+  min-height: 100vh;
+  padding: 10px;
+}/*# sourceMappingURL=Home.css.map */
