@@ -25,20 +25,27 @@ $mist: #ADA4AF;
     .container{
         display: flex;
         flex-direction: column;
-        // margin: auto;
-        margin-top: 200px;
-        width: 600px;
+        // margin-top: 200px;
+        width: 75%;
         background: $eggshell;
-        padding-bottom: 30px;
-        // max-width: 740px;
+        padding-bottom: 35px;
         max-width: 540px;
-        // border-radius: 24.6px;
-
-        margin: 100px auto 20px;
-        // padding: 40px 30px 70px;
+        min-width: 300px;
+        // margin: 100px auto 20px;
+        margin: 100px auto 100px auto;
+        overflow: visible;
         border-radius: 10px;
         outline: #532F2F dashed 6px;
         box-shadow:  0 0 0 19.32px $honey; 
+    }
+
+    // Sign-up container background-pattern
+    .container{
+        background-image: url('images/Hive_Pattern.png');
+        background-position: top right;
+        background-repeat:repeat-y;
+        background-size: 540.518px  439.838px;
+        height: auto;
     }
     
 
@@ -48,9 +55,10 @@ $mist: #ADA4AF;
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap:9px;
+        gap: 9px;
         width: 100%;
         margin-top: 30px;
+        flex-wrap: wrap;
         // border: 3px solid black;
     }
 
@@ -65,6 +73,7 @@ $mist: #ADA4AF;
         font-weight: 400;
         font-style: normal;
         font-size: 40.679px;
+
     }
 
     // Subtitle under main title
@@ -83,21 +92,28 @@ $mist: #ADA4AF;
 
     // All info inputs and labels container
     .inputs{
-        margin-top: 55px;
+        margin-top: 25px;
+        margin-left: 20px;
+        margin-right: 20px;
         display: flex;
         flex-direction: column;
         gap: 25px;
+        // border: 3px solid black;
     }
 
     // Individual info inputs and labels containers
     .input_box{
-        margin: auto;
+        // margin: auto;
+        // padding-left: 10px;
+        // padding-right: 10px;
+        width: 100%;
+        // border: 3px solid black;
     }
 
     // labels
     .input_box p{
         color: $chocolate;
-        font-size: 21px;
+        font-size: 18px;
     }
 
     // Inputs
@@ -111,10 +127,12 @@ $mist: #ADA4AF;
         // height: 70px;
         background: $cream;
         border-radius: 40px;
+        // border: 3px solid black;
     }
 
       // Input text box content
     .input input{
+        position:relative;
         height: 50px;
         width: 400px;
         background: transparent;
@@ -122,10 +140,11 @@ $mist: #ADA4AF;
         outline: none;
         color: $chocolate;
         // font-size: 18.5px;
-        font-size: 17.797px;
+        font-size: 18px;
         font-family: 'Calistoga', sans-serif;
         //padding: 10px;
         flex: 1;
+        // border: 3px solid black;
     }
     
     // Input box icons
@@ -133,6 +152,58 @@ $mist: #ADA4AF;
         margin: 0px 30px;
         font-size: 20px;
         color: gray;
+        // border: 3px solid black;
+    }
+
+    .input2{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin: auto; 
+        width: 100%;
+        // width: 495px;
+        // height: 70px;
+        background: $cream;
+        border-radius: 40px;
+        // border: 3px solid black;
+    }
+
+    .input2 input{
+        position:relative;
+        height: 50px;
+        width: 336px;
+        background: transparent;
+        border: none;
+        outline: none;
+        color: $chocolate;
+        // font-size: 18.5px;
+        font-size: 18px;
+        font-family: 'Calistoga', sans-serif;
+        //padding: 10px;
+        flex: 1;
+        // border: 3px solid black;
+    }
+
+    .input2 i{
+        margin: 0px 30px;
+        font-size: 20px;
+        color: gray;
+        // border: 3px solid black;
+    }
+
+    .password-toggle-icon {
+        // position: absolute;
+        // top: 8px;
+        // right: 10px;
+        // z-index: 1000;
+        // position: absolute;
+        margin-left: 15px;
+        margin-right: 20px;
+        font-size: 20px;
+        color: gray;
+        cursor: pointer;
+        // right: 80px;
+        // border: 3px solid black;
     }
 
 
@@ -140,12 +211,16 @@ $mist: #ADA4AF;
 // Remember account and forgot password container
     .forgot-container{
         display: flex;
-        gap: 200px;
+        // gap: 200px;
         margin: 15px auto;
+        font-size: 16.5px;
+        // border: black 5px solid;
+        width: 100%;
     }
 
     // remember me container
     .remember-password{
+        padding-left: 10px;
         display: flex;
         color: $chocolate;
         // border: 8px solid black;
@@ -158,6 +233,7 @@ $mist: #ADA4AF;
 
     // forgot password container
     .forgot-password{
+        margin-left: 47%;
         display: flex;
         // border: 8px solid black;
     }
@@ -190,50 +266,72 @@ $mist: #ADA4AF;
         display: flex;
         justify-content: center;
         align-items: center;
-        width: 220px; 
-        height: 59px;
+        width: 240px; 
+        height: 52px;
         color: white;
         background: $sunrise;
         border-radius: 50px;
         font-size: 19px;
         font-weight: 700;
         cursor: pointer;
-        box-shadow: 0 9.342px 7.474px 0 rgba(0, 0, 0, 0.25);
+        box-shadow: 0 8px 6px 0 rgba(0, 0, 0, 0.25);
     }
 
 
 
+    //Signup/Login container
+    .page-change{
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+    }
     // Sign-Up link
     .Sign-Up span{
         color: $sunrise;
         cursor: pointer;
         font-weight: 600;
-        text-decoration: underline;
+        // text-decoration: underline;
     }
-
+ 
     // Login link
     .Login span{
         color: $sunrise;
         cursor: pointer;
         font-weight: 600;
+        // text-decoration: underline;
+    }
+
+     //Sign-up link hover
+    .Sign-Up span:hover{
+        color: orangered;
+        background-color: transparent;
         text-decoration: underline;
     }
 
+    // Login link hover
+    .Login span:hover{
+        color: orangered;
+        background-color: transparent;
+        text-decoration: underline;
+    }
+
+
+
     //Sign up text
     .Sign-Up{
-        padding-left: 62px;
-        margin-top: 27px;
+        // padding-left: 62px;
+        margin-top: 16px;
         color: $mist;
-        font-size: 18px;
+        font-size: 17px;
         text-align: left;
     }
 
     //Login Text
     .Login{
-        padding-left: 62px;
-        margin-top: 27px;
+        // padding-left: 62px;
+        margin-top: 16px;
         color: $mist;
-        font-size: 18px;
+        font-size: 17px;
         text-align: left;
     }
 
@@ -264,13 +362,14 @@ $mist: #ADA4AF;
         display:block;
     }
 
+     // Login page decor
     #drip1 {
         // display: block;
         // position: absolute;
         width: 95px;
         height: 60px;
         left: 5%;
-        bottom: -8.5rem;
+        bottom: -6.3rem;
     }
 
      #drip3 {
@@ -279,7 +378,7 @@ $mist: #ADA4AF;
         width: 62px;
         height: 61px;
         left: 45%;
-        bottom: -7.1rem;
+        bottom: -6.5rem;
     }
 
     #drip2 {
@@ -288,51 +387,140 @@ $mist: #ADA4AF;
         width: 88px;
         height: 35px;
         left: 78%;
-        bottom: -4.4rem;
+        bottom: -4.9rem;
     }
 
     #right-drip {
         width: 30px;
         height: 60px;
         left: 102.5%;
-        bottom: 55rem;
+        bottom: 48rem;
         transform: rotate(4deg);
     }
 
     #left-drip{
         width: 35px;
         height: 64px;
-        left: -6.9%;
+        left: -8%;
         top: -45rem;
     }
 
     #left-flower{
-        width: 63px;
-        height: 64px;
-        left: -10%;
+        width: 122.764px;
+        height: 148.944px;
+        left: -18.5%;
         top: -30rem;
-        transform: rotate(-25deg);
+        // transform: rotate(-25deg);
     }
 
-    #two-flowers {
+    #two-flowers{
         width: 107px;
         height: 128px;
         left: 78%;
-        top: -67.5rem;
+        top: -60.5rem;
     }
 
-    // #purple-flower {
-    //     width: 49px;
-    //     height: 50px;
-    //     left: 105.5%;
-    //     bottom: 8.5rem;
-    //     transform: rotate(-18deg);
-    // }
+    #right-flower{
+        width: 135px;
+        height: 283px;
+        left: 96.5%;
+        bottom: 7.75rem;
+    }
 
-    // #white-flower {
-    //     width: 113px;
-    //     height: 213px;
-    //     left: 104.6%;
-    //     bottom: -4.75rem;
-    // }
+     #right-drip {
+        width: 30px;
+        height: 60px;
+        left: 102.5%;
+        bottom: 48rem;
+        transform: rotate(4deg);
+    }
+
+    #left-drip{
+        width: 35px;
+        height: 64px;
+        left: -8%;
+        top: -45rem;
+    }
+
+    #left-flower{
+        width: 122.764px;
+        height: 148.944px;
+        left: -18.5%;
+        top: -30rem;
+        // transform: rotate(-25deg);
+    }
+
+    #two-flowers{
+        width: 107px;
+        height: 128px;
+        left: 78%;
+        top: -60.5rem;
+    }
+
+    #right-flower{
+        width: 135px;
+        height: 283px;
+        left: 96.5%;
+        bottom: 7.75rem;
+    }
+
+
+
+    // Sign-in page decor
+     #right-drip-2 {
+        width: 30px;
+        height: 60px;
+        left: 102.5%;
+        bottom: 15rem;
+        transform: rotate(4deg);
+    }
+
+    #left-drip-2{
+        width: 35px;
+        height: 64px;
+        left: -8%;
+        top: -28rem;
+    }
+
+    #left-flower-2{
+        width: 122.764px;
+        height: 148.944px;
+        left: -18.5%;
+        top: -14rem;
+        // transform: rotate(-25deg);
+    }
+
+    #two-flowers-2{
+        width: 107px;
+        height: 128px;
+        left: 70%;
+        top: -43.5rem;
+    }
+
+    #right-flower-2{
+        width: 135px;
+        height: 283px;
+        left: 96.5%;
+        bottom: -2.75rem;
+    }
 }
+
+// .input {
+//     position: relative; // This is the anchor for your eye icon
+//     display: flex;
+//     align-items: center;
+    
+//     input {
+//         width: 100%;
+//         padding-right: 40px; // Make space so text doesn't go under the eye
+//     }
+
+//     .password-toggle-icon {
+//         position: absolute;
+//         right: 15px;
+//         top: 50%;
+//         transform: translateY(-50%); // Perfectly centers the icon vertically
+//         cursor: pointer;
+//         color: #777;
+//     }
+// }
