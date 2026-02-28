@@ -1,4 +1,4 @@
-import "./Timer.scss"; //imports the timer SCSS file
+import "../styles/Timer.scss"; //imports the timer SCSS file
 import backButton from "../assets/back-button.svg";
 import beeLine from "../assets/Bee Line.svg";
 import bee from "../assets/bee.svg";

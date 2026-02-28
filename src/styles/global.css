@@ -1,0 +1,9 @@
+:root {
+  background-color: darkseagreen;
+}
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  background-color: darkseagreen;
+}/*# sourceMappingURL=global.css.map */
