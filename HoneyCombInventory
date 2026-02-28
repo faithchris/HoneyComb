@@ -1,0 +1,79 @@
+interface Item {
+    name: string;
+    type: string;
+    isPlaced: boolean;
+}
+
+class Inventory {
+    items: Item[] = [];
+
+    addItem(item: Item): void {
+        this.items.push(item);
+    }
+
+    equipItem(itemName: string): void {
+        const item = this.items.find(i => i.name === itemName);
+        if (!item) return;
+
+        this.items.forEach(i => {
+            if (i.type === item.type) {
+                i.isPlaced = false;
+            }
+        });
+
+        item.isPlaced = true;
+    }
+
+    unequipItem(itemName: string): void {
+        const item = this.items.find(i => i.name === itemName);
+        if (!item) return;
+
+        item.isPlaced = false;
+    }
+
+    displayInventory(): void {
+        this.items.forEach(item => {
+            console.log(
+                `${item.name} (${item.type}) - ${item.isPlaced ? "Equipped" : "Unequipped"}`
+            );
+        });
+    }
+}
+
+interface Shop {
+    name: string;
+    items: Item[];
+    displayItems(): void;
+    buyItem(itemName: string): void;
+}
+
+class InventoryShop implements Shop {
+    name: string = "Shop";
+    items: Item[] = [];
+    inventory: Inventory;
+
+    constructor(inventory: Inventory) {
+        this.inventory = inventory;
+    }
+
+    displayItems(): void {
+        this.items.forEach(item => {
+            console.log(`${item.name} (${item.type})`);
+        });
+    }
+
+    buyItem(itemName: string): void {
+        const item = this.items.find(i => i.name === itemName);
+        if (!item) return;
+
+        this.inventory.addItem({
+            name: item.name,
+            type: item.type,
+            isPlaced: false
+        });
+    }
+
+    linkToDecorateMode(): void {
+        console.log("Linking to Decorate Mode...");
+    }
+}
