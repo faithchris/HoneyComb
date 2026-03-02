@@ -13,12 +13,13 @@ $mist: #ADA4AF;
 .Sign_In_Style{
     // Body style
     background-color: $mint;      
-    // min-height: 100vh;       
-    height:100%;
+    min-height: 100vh;
     width: 100%;             
     display: flex;          
-    align-items: center;    
+    align-items: flex-start;    
     justify-content: center; 
+    padding: 40px 0 24px;
+    box-sizing: border-box;
     font-family: 'Calistoga', sans-serif;
 
     // Sign-up container
@@ -32,7 +33,7 @@ $mist: #ADA4AF;
         max-width: 540px;
         min-width: 300px;
         // margin: 100px auto 20px;
-        margin: 100px auto 100px auto;
+        margin: 0 auto;
         overflow: visible;
         border-radius: 10px;
         outline: #532F2F dashed 6px;
@@ -252,6 +253,21 @@ $mist: #ADA4AF;
         text-decoration: underline;
     }
 
+    .forgot-password-link{
+        color: $sunrise;
+        background: transparent;
+        border: none;
+        padding: 0;
+        font: inherit;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    .forgot-password-link:hover{
+        color: orangered;
+        text-decoration: underline;
+    }
+
 
 
   // Buttons container 
@@ -333,6 +349,28 @@ $mist: #ADA4AF;
         color: $mist;
         font-size: 17px;
         text-align: left;
+    }
+
+    .forgot-password-page .subtitle{
+        width: auto;
+        max-width: 420px;
+        height: auto;
+        text-align: center;
+        padding: 10.6px 20px 0;
+    }
+
+    .auth-message{
+        margin: 0 20px;
+        text-align: center;
+        font-size: 15px;
+    }
+
+    .auth-message-success{
+        color: $seafoam;
+    }
+
+    .auth-message-error{
+        color: $chocolate;
     }
 
 

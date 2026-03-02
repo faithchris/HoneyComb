@@ -199,6 +199,27 @@ $font-two: milonga;
     transform: translateY(0px);
 }
 
+#ResultOk{
+    background: $pc-flamingo;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    padding: 12px 36px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: transform 0.15s ease;
+}
+
+#ResultOk:hover{
+    transform: translateY(-2px);
+    background: $pc-sun;
+}
+
+#ResultOk:active{
+    transform: translateY(0px);
+}
+
 
 #Focus{
     position: absolute;
@@ -262,6 +283,59 @@ $font-two: milonga;
     gap: 30px;
     padding-bottom: 10px;
 
+}
+
+.ResultModalBox{
+    min-height: 360px;
+    padding: 88px 30px 36px;
+    overflow: visible;
+}
+
+.ResultTitle{
+    font-family: "Pacifico", cursive;
+    font-size: 2.3rem;
+    color: $pc-voodoo;
+    margin-bottom: 20px;
+}
+
+.ResultModalBox .ResultMessage{
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: $pc-brown;
+    margin-bottom: 34px;
+}
+
+.ResultDripLeft{
+    position: absolute;
+    width: 38px;
+    left: -14px;
+    top: 96px;
+    pointer-events: none;
+}
+
+.ResultDripRight{
+    position: absolute;
+    width: 38px;
+    right: -14px;
+    top: 96px;
+    pointer-events: none;
+}
+
+.ResultBee{
+    position: absolute;
+    width: 130px;
+    top: -52px;
+    left: 32px;
+    transform: rotate(-5deg);
+    pointer-events: none;
+}
+
+.ResultFlower{
+    position: absolute;
+    width: 98px;
+    right: 14px;
+    bottom: -14px;
+    pointer-events: none;
 }
 
 #backButtonWrapper{

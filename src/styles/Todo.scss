@@ -111,12 +111,15 @@ $mist: #ADA4AF;
         height: 161.703px; */
         width: 439.873px;
         /* border: 3px solid black; */
+        pointer-events: none;
     }
 
     /* Add your text backdrop */
     .row{
         // border: 10px solid black;
         display: flex;
+        position: relative;
+        z-index: 2;
         width: 100%;
         align-items: center;
         justify-content: space-between;
@@ -225,6 +228,7 @@ $mist: #ADA4AF;
         // border: 10px solid black;
         position: absolute;
         display:block;
+        pointer-events: none;
     }
 
     #drip1 {

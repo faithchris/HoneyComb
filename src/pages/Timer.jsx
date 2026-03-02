@@ -2,11 +2,12 @@ import "../styles/Timer.scss"; //imports the timer SCSS file
 import backButton from "../assets/back-button.svg";
 import beeLine from "../assets/Bee Line.svg";
 import bee from "../assets/bee.svg";
-import honeyDripLong from "../assets/honey-drip-long.svg";
 import honeyLeft from "../assets/honey-left.svg";
 import honeyRight from "../assets/honey-right.svg";
 import sadBee from "../assets/sad-bee.svg";
 import twoFlowers from "../assets/Two_Flowers.svg";
+import { supabase } from "../lib/supabaseClient";
+import { getCurrentSession } from "../lib/authentication";
 
 import  { useState, useEffect } from "react"; // import react hooks: 
 //useState -> to store changing values (time)
@@ -25,17 +26,130 @@ export default function Timer({ duration }){ //defines the Timer component and r
                                                 //'setTime' is used to update the times as it counts down
     
     const [elapsedSeconds, setElapsedSeconds] = useState(0); //this is where the rate logic starts to show, this tracks how many mintes have been completed 
+    const [resultModal, setResultModal] = useState({
+        open: false,
+        message: "",
+    });
    
     //const [isRunning, setIsRunning] = useState(false); //this was replaced w/ status, set status for more options (pause, resume, stop)
     
     const [status, setStatus]= useState("idle"); // controls the overall timer state (started, stopped, resumed)
    
     const [stopModal, setStopModal] = useState(false); //this is for the message that pops up when user hits 'stop'
+
+    function isMissingColumnError(error, tableName, columnName) {
+        const message = (error?.message || "").toLowerCase();
+        return message.includes(tableName) && message.includes(columnName) && message.includes("does not exist");
+    }
+
+    async function ensureProfileRow(userId) {
+        const now = new Date().toISOString();
+        const { error } = await supabase
+            .from("profiles")
+            .upsert({ id: userId, honeycomb: 0, updated_at: now }, { onConflict: "id" });
+
+        if (!error) {
+            return "honeycomb";
+        }
+
+        if (!isMissingColumnError(error, "profiles", "honeycomb")) {
+            throw error;
+        }
+
+        const { error: legacyError } = await supabase
+            .from("profiles")
+            .upsert({ id: userId, points: 0, updated_at: now }, { onConflict: "id" });
+
+        if (legacyError) {
+            throw legacyError;
+        }
+
+        return "points";
+    }
+
+    async function loadUserBalance(userId) {
+        const { data, error } = await supabase
+            .from("profiles")
+            .select("honeycomb")
+            .eq("id", userId)
+            .single();
+
+        if (!error) {
+            return { balance: data?.honeycomb ?? 0, column: "honeycomb" };
+        }
+
+        if (error?.code === "PGRST116") {
+            const column = await ensureProfileRow(userId);
+            return { balance: 0, column };
+        }
+
+        if (!isMissingColumnError(error, "profiles", "honeycomb")) {
+            throw error;
+        }
+
+        const { data: legacyData, error: legacyError } = await supabase
+            .from("profiles")
+            .select("points")
+            .eq("id", userId)
+            .single();
+
+        if (legacyError?.code === "PGRST116") {
+            await ensureProfileRow(userId);
+            return { balance: 0, column: "points" };
+        }
+
+        if (legacyError) {
+            throw legacyError;
+        }
+
+        return { balance: legacyData?.points ?? 0, column: "points" };
+    }
+
+    async function saveUserBalance(userId, nextTotal, column) {
+        const { error } = await supabase
+            .from("profiles")
+            .update({
+                [column]: nextTotal,
+                updated_at: new Date().toISOString(),
+            })
+            .eq("id", userId);
+
+        if (error) {
+            throw error;
+        }
+    }
+
+    async function saveSessionEarnings(userId, durationMs, honeycombEarned) {
+        const payload = {
+            user_id: userId,
+            duration_ms: durationMs,
+            honeycomb_earned: honeycombEarned,
+        };
+
+        const { error } = await supabase.from("sessions").insert(payload);
+        if (!error) {
+            return;
+        }
+
+        if (!isMissingColumnError(error, "sessions", "honeycomb_earned")) {
+            throw error;
+        }
+
+        const { error: legacyError } = await supabase.from("sessions").insert({
+            user_id: userId,
+            duration_ms: durationMs,
+            points_earned: honeycombEarned,
+        });
+
+        if (legacyError) {
+            throw legacyError;
+        }
+    }
     
   //modal logic for when user preses stop, modals are windows that pop up when an event happens (ie. clicking a button)
     const toggleModal = () => {
         setStopModal(!stopModal);
-        setStatus ("Paused");
+        setStatus("paused");
     };
    
    //reset logic
@@ -47,13 +161,58 @@ export default function Timer({ duration }){ //defines the Timer component and r
     };
 
     //stop logic goes here --> takes you back to start 
-    const handleStop = ()=> {
+    const handleStop = async ()=> {
+        const completedMinutes = Math.floor(elapsedSeconds / 60);
+        const honeycombEarned = completedMinutes * 2;
+        let resultMessage = `Session complete: +${honeycombEarned} Honeycombs earned.`;
+
+        //this is where honeycomb currency logic goes
+        //setElapsedSeconds is handles the minutes accumalated as the timer goes down and that is what gets calculated into the rate
+        if (honeycombEarned > 0) {
+            try {
+                const session = await getCurrentSession();
+                let userId = session?.user?.id;
+
+                if (!userId) {
+                    const { data } = await supabase.auth.getUser();
+                    userId = data?.user?.id || null;
+                }
+
+                if (!userId) {
+                    resultMessage = `Session complete: +${honeycombEarned} Honeycombs earned. Log in to save them.`;
+                } else {
+                    const { balance, column } = await loadUserBalance(userId);
+                    const newTotal = balance + honeycombEarned;
+                    await saveUserBalance(userId, newTotal, column);
+
+                    const durationMs = completedMinutes * 60 * 1000;
+                    await saveSessionEarnings(userId, durationMs, honeycombEarned);
+
+                    window.dispatchEvent(
+                        new CustomEvent("honeycomb-updated", {
+                            detail: {
+                                userId,
+                                newTotal,
+                            },
+                        }),
+                    );
+                }
+            } catch (error) {
+                const reason = error?.message ? ` Reason: ${error.message}` : "";
+                resultMessage = `Session complete: +${honeycombEarned} Honeycombs earned, but they could not be saved.${reason}`;
+            }
+        } else {
+            resultMessage = "Session complete: +0 Honeycombs earned.";
+        }
+
         setStatus("idle"); 
         setTime(duration);
         setElapsedSeconds(0);
         setStopModal(false); //closes modal
-        //this is where honeycomb currency logic goes
-        //setElapsedSeconds is handles the minutes accumalated as the timer goes down and that is what gets calculated into the rate
+        setResultModal({
+            open: true,
+            message: resultMessage,
+        });
     }
     
 
@@ -218,6 +377,24 @@ export default function Timer({ duration }){ //defines the Timer component and r
         {/*WIP Focus mode button for users to toggle --> havent worked on yet, for second milestone */}
 
         <button id="Focus">Focus</button>
+
+        {resultModal.open && (
+            <div className="Modal" onClick={() => setResultModal({ open: false, message: "" })}>
+                <div className="ModalBox ResultModalBox" onClick={(e) => e.stopPropagation()}>
+                    <img src={honeyLeft} alt="" className="ResultDripLeft" aria-hidden="true" />
+                    <img src={honeyRight} alt="" className="ResultDripRight" aria-hidden="true" />
+                    <img src={bee} alt="" className="ResultBee" aria-hidden="true" />
+                    <img src={twoFlowers} alt="" className="ResultFlower" aria-hidden="true" />
+                    <h3 className="ResultTitle">Session Complete!</h3>
+                    <p className="ResultMessage">{resultModal.message}</p>
+                    <div className="ModalButtons">
+                        <button id="ResultOk" onClick={() => setResultModal({ open: false, message: "" })}>
+                            OK
+                        </button>
+                    </div>
+                </div>
+            </div>
+        )}
                         </div>
                 </div>
             
