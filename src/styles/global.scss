@@ -9,13 +9,17 @@ $seafoam: #728972;
 $mint: darkseagreen;
 $mist: #ADA4AF;
 
+/* Focus Friends-like typography: clean + friendly rounded */
+$font-ui: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 
 :root {
-  background-color: $mint;
+  background-color: $eggshell;
+  font-family: $font-ui;
 }
 
 html, body, #root {
   height: 100%;
   margin: 0;
-  background-color: $mint;
+  background-color: $eggshell;
+  font-family: $font-ui;
 }

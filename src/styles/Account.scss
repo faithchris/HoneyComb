@@ -1,0 +1,399 @@
+$eggshell: #FFFAEF;
+$cream: #FFE9BE;
+$chocolate: #532F2F;
+$darkbrown: #23150A;
+$sunrise: #F28A2F;
+$honey: #FFD341;
+$mist: #ADA4AF;
+$seafoam: #728972;
+
+.Account_Style {
+  font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  min-height: 100vh;
+  padding: 24px 20px 32px;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: $eggshell;
+  background-image: radial-gradient(circle at top left, #ffe2ff 0, transparent 55%), radial-gradient(circle at bottom right, #d6f4ff 0, transparent 55%);
+  position: relative;
+  overflow: hidden;
+}
+
+.Account_Style .cloud {
+  position: absolute;
+  background: rgba(191, 233, 255, 0.85);
+  border-radius: 999px;
+  filter: drop-shadow(0 8px 10px rgba(0, 0, 0, 0.08));
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.9;
+}
+
+.Account_Style .cloud::before,
+.Account_Style .cloud::after {
+  content: "";
+  position: absolute;
+  background: inherit;
+  border-radius: 999px;
+}
+
+.Account_Style .cloud-1 {
+  width: 220px;
+  height: 70px;
+  top: 34px;
+  left: -40px;
+  animation: accountCloudFloat 26s ease-in-out infinite;
+}
+
+.Account_Style .cloud-1::before { width: 90px; height: 90px; left: 28px; top: -38px; }
+.Account_Style .cloud-1::after { width: 120px; height: 120px; left: 88px; top: -58px; }
+
+.Account_Style .cloud-2 {
+  width: 280px;
+  height: 86px;
+  top: 120px;
+  right: -90px;
+  animation: accountCloudFloat 32s ease-in-out infinite reverse;
+  opacity: 0.8;
+  animation-delay: -5s;
+}
+
+.Account_Style .cloud-2::before { width: 110px; height: 110px; left: 40px; top: -44px; }
+.Account_Style .cloud-2::after { width: 150px; height: 150px; left: 120px; top: -74px; }
+
+.Account_Style .cloud-3 {
+  width: 240px;
+  height: 78px;
+  top: 260px;
+  left: 12%;
+  animation: accountCloudBob 6.5s ease-in-out infinite;
+  opacity: 0.65;
+}
+
+.Account_Style .cloud-3::before { width: 92px; height: 92px; left: 24px; top: -40px; }
+.Account_Style .cloud-3::after { width: 128px; height: 128px; left: 96px; top: -60px; }
+
+@keyframes accountCloudFloat {
+  0%, 100% { transform: translate(0, 0); }
+  25% { transform: translate(30px, -12px); }
+  50% { transform: translate(50px, -5px); }
+  75% { transform: translate(20px, -15px); }
+}
+
+@keyframes accountCloudBob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-18px); }
+}
+
+/* Bees */
+.account-bees {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.Account_Style .bee {
+  position: absolute;
+  display: block;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.Account_Style .bee-float {
+  animation: accountBeeFloat 3.8s ease-in-out infinite;
+}
+
+.Account_Style .bee-buzz {
+  animation: accountBeeBuzz 1.25s ease-in-out infinite;
+}
+
+#account-bee-left {
+  width: 100px;
+  height: auto;
+  left: 2%;
+  top: 18%;
+  animation-delay: 0.15s;
+}
+
+#account-bee-top {
+  width: 90px;
+  height: auto;
+  right: 8%;
+  top: 8%;
+}
+
+#account-bee-right {
+  width: 110px;
+  height: auto;
+  right: 3%;
+  bottom: 20%;
+  animation-delay: 0.35s;
+}
+
+@keyframes accountBeeFloat {
+  0% { transform: translateY(0) rotate(-2deg); }
+  50% { transform: translateY(-12px) rotate(2deg); }
+  100% { transform: translateY(0) rotate(-2deg); }
+}
+
+@keyframes accountBeeBuzz {
+  0% { transform: translate(0, 0) rotate(0deg); }
+  25% { transform: translate(2px, -2px) rotate(1deg); }
+  50% { transform: translate(0, -4px) rotate(0deg); }
+  75% { transform: translate(-2px, -1px) rotate(-1deg); }
+  100% { transform: translate(0, 0) rotate(0deg); }
+}
+
+.account-container {
+  max-width: 640px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.account-title {
+  margin: 0 0 4px;
+  color: $chocolate;
+  font-size: 1.75rem;
+  font-weight: 800;
+}
+
+.account-subtitle {
+  margin: 0 0 28px;
+  color: rgba($chocolate, 0.75);
+  font-size: 0.95rem;
+}
+
+.account-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 20px 24px;
+  margin-bottom: 20px;
+  border: 1px solid rgba($chocolate, 0.12);
+  box-shadow: 0 10px 24px rgba($darkbrown, 0.08);
+}
+
+.account-card-title {
+  margin: 0 0 8px;
+  color: $chocolate;
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.account-card-desc {
+  margin: 0 0 16px;
+  color: rgba($chocolate, 0.7);
+  font-size: 0.9rem;
+}
+
+.account-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.account-label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: $chocolate;
+}
+
+.account-label--readonly .account-input {
+  background: rgba($mist, 0.1);
+  color: rgba($chocolate, 0.8);
+}
+
+.account-input {
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid rgba($chocolate, 0.2);
+  font-size: 1rem;
+  color: $chocolate;
+}
+
+.account-input:focus {
+  outline: none;
+  border-color: $sunrise;
+  box-shadow: 0 0 0 3px rgba($sunrise, 0.2);
+}
+
+.account-button {
+  align-self: flex-start;
+  padding: 10px 20px;
+  border-radius: 999px;
+  border: none;
+  background: $sunrise;
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: filter 0.15s ease, transform 0.15s ease;
+}
+
+.account-button:hover:not(:disabled) {
+  filter: brightness(1.05);
+  transform: translateY(-1px);
+}
+
+.account-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.account-message {
+  margin: 12px 0 0;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.account-message--success {
+  color: $seafoam;
+}
+
+.account-message--error {
+  color: #b00020;
+}
+
+.account-password-section {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid rgba($chocolate, 0.12);
+}
+
+.account-password-title {
+  margin: 0 0 12px;
+  font-size: 1rem;
+  font-weight: 700;
+  color: $chocolate;
+}
+
+.account-blocked-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.account-blocked-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba($sunrise, 0.15);
+  color: $chocolate;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.account-blocked-remove {
+  border: none;
+  background: transparent;
+  color: rgba($chocolate, 0.7);
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0 0 0 4px;
+}
+
+.account-blocked-remove:hover {
+  color: $chocolate;
+}
+
+.account-blocked-add {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.account-blocked-add .account-input {
+  flex: 1;
+}
+
+.account-blocked-reset {
+  display: block;
+  padding: 8px 0;
+  border: none;
+  background: transparent;
+  color: rgba($chocolate, 0.65);
+  font-size: 0.85rem;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.account-blocked-reset:hover {
+  color: $chocolate;
+}
+
+.account-integrations {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.account-integration {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: rgba($cream, 0.4);
+  border: 1px solid rgba($chocolate, 0.1);
+}
+
+.account-integration-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.account-integration-name {
+  font-weight: 700;
+  color: $chocolate;
+}
+
+.account-integration-desc {
+  font-size: 0.85rem;
+  color: rgba($chocolate, 0.65);
+}
+
+.account-connect {
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba($chocolate, 0.25);
+  background: #fff;
+  color: $chocolate;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.account-connect:hover:not(:disabled) {
+  background: rgba($honey, 0.2);
+  border-color: $honey;
+}
+
+.account-connect:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.account-friends-placeholder {
+  padding: 16px;
+  border-radius: 12px;
+  background: rgba($cream, 0.3);
+  border: 1px dashed rgba($chocolate, 0.2);
+  text-align: center;
+}
+
+.account-friends-placeholder p {
+  margin: 0 0 12px;
+  font-size: 0.9rem;
+  color: rgba($chocolate, 0.7);
+}

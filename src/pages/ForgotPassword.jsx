@@ -50,17 +50,38 @@ const ForgotPassword = () => {
   }
 
   return (
-    <div className="Sign_In_Style">
+    <div className="Sign_In_Style Sign_In_Style--signup">
+      <header className="sign-in-header">
+        <div className="sign-in-header-inner">
+          <span className="sign-in-header-spacer" aria-hidden="true" />
+          <button
+            type="button"
+            className="sign-in-top-btn sign-in-top-btn--login"
+            onClick={() => navigate("/Sign_In?mode=login")}
+          >
+            Log in
+          </button>
+        </div>
+      </header>
+      <div className="cloud cloud-1" aria-hidden="true" />
+      <div className="cloud cloud-2" aria-hidden="true" />
+      <div className="cloud cloud-3" aria-hidden="true" />
+
       <div className="container forgot-password-page">
         <div className="header">
           <div>
-            <div className="text">Reset Password</div>
-            <div className="subtitle">Enter your email and we will send reset instructions.</div>
+            <div className="text">honeycomb</div>
+            <div className="subtitle-helper">A Focus Timer App</div>
+            <div className="subtitle subtitle--context">Reset your password</div>
+            <div className="subtitle-detail">
+              Enter your email and we will send reset instructions.
+            </div>
           </div>
         </div>
 
-        <div
+        <form
           className="inputs"
+          onSubmit={handleSubmit}
           onKeyDown={(event) => {
             if (event.key === "Enter" && !isSubmitting) {
               handleSubmit(event);
@@ -68,53 +89,56 @@ const ForgotPassword = () => {
           }}
         >
           <div className="input_box">
-            <p>Email</p>
             <div className="input">
               <i className="fa-solid fa-envelope"></i>
               <input
                 type="email"
                 name="email"
-                placeholder="Enter your email"
+                placeholder="You@example.com"
                 value={email}
                 onChange={(event) => setEmail(event.target.value)}
                 required
+                autoComplete="email"
               />
             </div>
           </div>
-        </div>
 
-        {message ? (
-          <div className={`auth-message ${hasError ? "auth-message-error" : "auth-message-success"}`}>
-            {message}
-          </div>
-        ) : null}
+          {message ? (
+            <div className={`auth-message ${hasError ? "auth-message-error" : "auth-message-success"}`}>
+              {message}
+            </div>
+          ) : null}
 
-        <div className="submit-container">
-          <div
-            className="submit"
-            onClick={(event) => {
-              if (!isSubmitting) {
-                handleSubmit(event);
-              }
-            }}
-            role="button"
-            aria-disabled={isSubmitting}
-          >
-            {isSubmitting ? "Please wait..." : "Send Reset Link"}
-          </div>
-        </div>
-
-        <div className="page-change">
-          <div className="Login">
-            Back to{" "}
-            <span
-              onClick={() => {
-                navigate("/Sign_In");
-              }}
+          <div className="submit-container">
+            <button
+              className="submit submit--login"
+              type="submit"
+              disabled={isSubmitting}
             >
-              Login
-            </span>
+              {isSubmitting ? "Please wait..." : "Send reset link"}
+            </button>
           </div>
+        </form>
+
+        <div className="side-decor side-decor--forgot" aria-hidden="true">
+          <img
+            id="left-bee"
+            className="bee bee-float"
+            src="images/Test_Bee_Logo2.png"
+            alt="Bee"
+          />
+          <img
+            id="top-bee"
+            className="bee bee-buzz"
+            src="images/Test_Bee_Logo4.png"
+            alt="Bee"
+          />
+          <img
+            id="right-bee"
+            className="bee bee-float"
+            src="images/Test_Bee_Logo3.png"
+            alt="Bee"
+          />
         </div>
       </div>
     </div>

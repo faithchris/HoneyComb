@@ -7,6 +7,7 @@ import { signInWithEmail, signUpWithEmail } from "../lib/authentication.js";
 const Sign_In = () => {
   const [action, setAction] = useState("Sign Up");
   const [passwordInputType, toggleIcon] = usePasswordToggle();
+  const [authMessage, setAuthMessage] = useState(null);
   const [formState, setFormState] = useState({
     name: "",
     email: "",
@@ -37,23 +38,24 @@ const Sign_In = () => {
     if (event?.preventDefault) {
       event.preventDefault();
     }
+    setAuthMessage(null);
     const email = formState.email.trim().toLowerCase();
     const password = formState.password;
     const name = formState.name.trim();
 
     if (!email || !password) {
-      alert("Email and password are required.");
+      setAuthMessage({ type: "error", text: "Email and password are required." });
       return;
     }
 
     if (action === "Sign Up") {
       if (!name) {
-        alert("Name is required.");
+        setAuthMessage({ type: "error", text: "Please enter your name." });
         return;
       }
 
       if (formState.confirmPassword !== password) {
-        alert("Passwords do not match.");
+        setAuthMessage({ type: "error", text: "Passwords do not match." });
         return;
       }
     }
@@ -64,8 +66,12 @@ const Sign_In = () => {
       if (action === "Sign Up") {
         const data = await signUpWithEmail({ name, email, password });
         if (!data.session) {
-          alert("Account created. Please confirm your email before logging in.");
+          setAuthMessage({
+            type: "success",
+            text: "Account created. Check your email to confirm your account, then log in.",
+          });
           setAction("Login");
+          setFormState((prev) => ({ ...prev, password: "", confirmPassword: "" }));
         } else {
           navigate("/", { replace: true });
         }
@@ -74,94 +80,122 @@ const Sign_In = () => {
         navigate("/", { replace: true });
       }
     } catch (error) {
-      alert(error.message || "Authentication failed. Please try again.");
+      setAuthMessage({
+        type: "error",
+        text: error?.message || "Authentication failed. Please try again.",
+      });
     } finally {
       setIsSubmitting(false);
     }
   }
 
+  useEffect(() => {
+    setAuthMessage(null);
+    setFormState({
+      name: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+    });
+  }, [action]);
+
   return (
-    <div className="Sign_In_Style">
+    <div className={`Sign_In_Style Sign_In_Style--signup ${action === "Login" ? "Sign_In_Style--login" : ""}`}>
+      <header className="sign-in-header">
+        <div className="sign-in-header-inner">
+          <span className="sign-in-header-spacer" aria-hidden="true" />
+          <button
+            type="button"
+            className={`sign-in-top-btn ${action === "Login" ? "sign-in-top-btn--signup" : "sign-in-top-btn--login"}`}
+            onClick={() => setAction(action === "Login" ? "Sign Up" : "Login")}
+          >
+            {action === "Login" ? "Sign up" : "Log in"}
+          </button>
+        </div>
+      </header>
+      <div className="cloud cloud-1" aria-hidden="true" />
+      <div className="cloud cloud-2" aria-hidden="true" />
+      <div className="cloud cloud-3" aria-hidden="true" />
       <div className="container">
         <div className="header">
-          {action === "Login" ? null : (
-            <div>
-              <div className="text">Create Your Account</div>
-              <div className="subtitle">Join Honey Comb & become un-bee-table!</div>
+          <div>
+            <div className="text">honeycomb</div>
+            <div className="subtitle-helper">A Focus Timer App</div>
+            <div className="subtitle subtitle--context">
+              {action === "Login" ? "Welcome back" : "Create your account"}
             </div>
-          )}
-          {action === "Sign Up" ? null : (
-            <div>
-              <div className="text">Welcome Back</div>
-              <div className="subtitle">Please enter your account details below.</div>
-            </div>
-          )}
+          </div>
         </div>
-        <div
-          className="inputs"
-          onKeyDown={(event) => {
-            if (event.key === "Enter") {
-              handleSubmit(event);
-            }
-          }}
-        >
+        <form className="inputs" onSubmit={handleSubmit}>
+          {authMessage ? (
+            <div
+              className={[
+                "auth-inline-message",
+                authMessage.type === "success" ? "auth-inline-message-success" : "auth-inline-message-error",
+              ].join(" ")}
+              role="status"
+              aria-live="polite"
+            >
+              {authMessage.text}
+            </div>
+          ) : null}
           {action === "Login" ? null : (
             <div className="input_box">
-              <p>Name</p>
               <div className="input">
                 <i className="fa-solid fa-user"></i>
                 <input
                   type="text"
                   name="name"
-                  placeholder="Enter your name"
+                  placeholder="Your name"
                   value={formState.name}
                   onChange={onFieldChange}
                   required={action === "Sign Up"}
+                  autoComplete="name"
                 />
               </div>
             </div>
           )}
           <div className="input_box">
-            <p>Email</p>
             <div className="input">
               <i className="fa-solid fa-envelope"></i>
               <input
                 type="email"
                 name="email"
-                placeholder="Enter your email"
+                placeholder="You@example.com"
                 value={formState.email}
                 onChange={onFieldChange}
                 required
+                autoComplete={action === "Login" ? "email" : "username"}
               />
             </div>
           </div>
           <div className="input_box">
-            <p>Password</p>
             <div className="input2">
               <i className="fa-solid fa-lock"></i>
               <input
                 type={passwordInputType}
-                placeholder="Enter password"
+                placeholder={action === "Login" ? "Enter your password" : "Create a password"}
                 name="password"
                 value={formState.password}
                 onChange={onFieldChange}
                 required
+                autoComplete={action === "Login" ? "current-password" : "new-password"}
               />
               <span className="password-toggle-icon">{toggleIcon}</span>
             </div>
           </div>
           {action === "Login" ? null : (
             <div className="input_box">
-              <p>Confirm Password</p>
               <div className="input">
                 <i className="fa-solid fa-lock"></i>
                 <input
                   type={passwordInputType}
-                  placeholder="Re-enter password"
+                  placeholder="Re-enter your password"
                   name="confirmPassword"
                   value={formState.confirmPassword}
                   onChange={onFieldChange}
                   required={action === "Sign Up"}
+                  autoComplete="new-password"
                 />
                 <span className="password-toggle-icon">{toggleIcon}</span>
               </div>
@@ -186,73 +220,41 @@ const Sign_In = () => {
               </div>
             ) : null}
           </div>
+          {action === "Login" ? null : (
+            <div className="signup-helper">Use a real email address so you can verify your account.</div>
+          )}
 
           <div className="submit-container">
-            <div
-              className="submit"
-              onClick={(event) => {
-                if (!isSubmitting) {
-                  handleSubmit(event);
-                }
-              }}
-              role="button"
-              aria-disabled={isSubmitting}
+            <button
+              className={`submit ${action === "Login" ? "submit--login" : "submit--signup"}`}
+              type="submit"
+              disabled={isSubmitting}
             >
-              {isSubmitting ? "Please wait..." : action === "Login" ? "Login" : "Sign Up"}
-            </div>
+              {isSubmitting ? "Please wait..." : action === "Login" ? "Log in" : "Sign up"}
+            </button>
           </div>
-        </div>
-        <div className="page-change">
-          {action === "Login" ? (
-            <div className="Sign-Up">
-              Don't have an account?{" "}
-              <span
-                onClick={() => {
-                  setAction("Sign Up");
-                }}
-              >
-                Sign up
-              </span>
-            </div>
-          ) : (
-            <div className="Login">
-              Have an account?{" "}
-              <span
-                onClick={() => {
-                  setAction("Login");
-                }}
-              >
-                Login
-              </span>
-            </div>
-          )}
-        </div>
+        </form>
 
-        {action === "Login" ? null : (
-          <div className="side-decor">
-            <img id="drip1" src="images/Drip 1.png" alt="Honey Drip" />
-            <img id="drip2" src="images/Drip 2.png" alt="Honey Drip" />
-            <img id="drip3" src="images/Drip 3.png" alt="Honey Drip" />
-            <img id="left-drip" src="images/Side-Drip 1.png" alt="Honey Drip" />
-            <img id="left-flower" src="images/Two_Flowers2.png" alt="Purple Flower" />
-            <img id="two-flowers" src="images/Two_Flowers.png" alt="Flowers" />
-            <img id="right-flower" src="images/flower_group.png" alt="Flowers" />
-            <img id="right-drip" src="images/Side-Drip 2.png" alt="Honey Drip" />
-          </div>
-        )}
-
-        {action === "Sign Up" ? null : (
-          <div className="side-decor">
-            <img id="drip1" src="images/Drip 1.png" alt="Honey Drip" />
-            <img id="drip2" src="images/Drip 2.png" alt="Honey Drip" />
-            <img id="drip3" src="images/Drip 3.png" alt="Honey Drip" />
-            <img id="left-drip-2" src="images/Side-Drip 1.png" alt="Honey Drip" />
-            <img id="left-flower-2" src="images/Two_Flowers2.png" alt="Purple Flower" />
-            <img id="two-flowers-2" src="images/Two_Flowers.png" alt="Flowers" />
-            <img id="right-flower-2" src="images/flower_group.png" alt="Flowers" />
-            <img id="right-drip-2" src="images/Side-Drip 2.png" alt="Honey Drip" />
-          </div>
-        )}
+        <div className="side-decor" aria-hidden="true">
+          <img
+            id="left-bee"
+            className="bee bee-float"
+            src="images/Test_Bee_Logo2.png"
+            alt="Bee"
+          />
+          <img
+            id="top-bee"
+            className="bee bee-buzz"
+            src="images/Test_Bee_Logo4.png"
+            alt="Bee"
+          />
+          <img
+            id="right-bee"
+            className="bee bee-float"
+            src="images/Test_Bee_Logo3.png"
+            alt="Bee"
+          />
+        </div>
       </div>
     </div>
   );

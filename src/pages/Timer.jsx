@@ -9,14 +9,20 @@ import twoFlowers from "../assets/Two_Flowers.svg";
 import { supabase } from "../lib/supabaseClient";
 import { getCurrentSession } from "../lib/authentication";
 
-import  { useState, useEffect } from "react"; // import react hooks: 
+import { useState, useEffect } from "react"; // import react hooks:
 //useState -> to store changing values (time)
 //useEffect -> to run side effects (the timer ticking)
 
 
 //timer logic goes here
 
+const PRESET_OPTIONS = [
+    { label: "50 min", value: 50 * 60 * 1000 },
+    { label: "45 min", value: 45 * 60 * 1000 },
+    { label: "25 min", value: 25 * 60 * 1000 },
+];
 
+const TIMER_STATE_KEY = "honeycomb_timer_state";
 
 export default function Timer({ duration }){ //defines the Timer component and recieves 'duration' as a prop (starting time in milliseconds)
    
@@ -25,7 +31,7 @@ export default function Timer({ duration }){ //defines the Timer component and r
     const [time, setTime]= useState(duration); // creates a state called 'time' initiallized to 'duration'
                                                 //'setTime' is used to update the times as it counts down
     
-    const [elapsedSeconds, setElapsedSeconds] = useState(0); //this is where the rate logic starts to show, this tracks how many mintes have been completed 
+    const [elapsedSeconds, setElapsedSeconds] = useState(0); //this is where the rate logic starts to show, this tracks how many mintes have been completed
     const [resultModal, setResultModal] = useState({
         open: false,
         message: "",
@@ -34,8 +40,84 @@ export default function Timer({ duration }){ //defines the Timer component and r
     //const [isRunning, setIsRunning] = useState(false); //this was replaced w/ status, set status for more options (pause, resume, stop)
     
     const [status, setStatus]= useState("idle"); // controls the overall timer state (started, stopped, resumed)
-   
     const [stopModal, setStopModal] = useState(false); //this is for the message that pops up when user hits 'stop'
+
+    const [baseDuration, setBaseDuration] = useState(duration);
+    const [selectedPreset, setSelectedPreset] = useState(duration);
+
+    // Restore timer state if user navigated away and came back
+    useEffect(() => {
+        try {
+            const raw = localStorage.getItem(TIMER_STATE_KEY);
+            if (!raw) return;
+            const saved = JSON.parse(raw);
+            if (!saved || typeof saved !== "object") return;
+
+            const savedBase = typeof saved.baseDuration === "number" ? saved.baseDuration : duration;
+            const savedTime = typeof saved.timeRemaining === "number" ? saved.timeRemaining : duration;
+            const savedElapsed = typeof saved.elapsedSeconds === "number" ? saved.elapsedSeconds : 0;
+            const savedStatus = saved.status || "idle";
+            const savedAt = typeof saved.savedAt === "number" ? saved.savedAt : null;
+
+            let nextTime = savedTime;
+            let nextElapsed = savedElapsed;
+
+            if (savedStatus === "running" && savedAt) {
+                const deltaMs = Date.now() - savedAt;
+                if (deltaMs > 0) {
+                    nextTime = Math.max(savedTime - deltaMs, 0);
+                    nextElapsed = savedElapsed + Math.floor(deltaMs / 1000);
+                }
+            }
+
+            setBaseDuration(savedBase);
+            setSelectedPreset(savedBase);
+            setTime(nextTime);
+            setElapsedSeconds(nextElapsed);
+
+            if (savedStatus === "running" && nextTime > 0) {
+                setStatus("running");
+            } else if (savedStatus === "paused" && nextTime > 0) {
+                setStatus("paused");
+            } else {
+                setStatus("idle");
+                localStorage.removeItem(TIMER_STATE_KEY);
+            }
+        } catch (_e) {
+            // ignore corrupted saved state
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    const handlePresetChange = (nextDuration) => {
+        if (status !== "idle") {
+            return;
+        }
+        setBaseDuration(nextDuration);
+        setTime(nextDuration);
+        setElapsedSeconds(0);
+        setSelectedPreset(nextDuration);
+    };
+
+    // Persist timer state so it survives navigation away from the page
+    useEffect(() => {
+        try {
+            if (status === "running" || status === "paused") {
+                const snapshot = {
+                    status,
+                    baseDuration,
+                    timeRemaining: time,
+                    elapsedSeconds,
+                    savedAt: Date.now(),
+                };
+                localStorage.setItem(TIMER_STATE_KEY, JSON.stringify(snapshot));
+            } else {
+                localStorage.removeItem(TIMER_STATE_KEY);
+            }
+        } catch (_e) {
+            // ignore storage errors
+        }
+    }, [status, time, elapsedSeconds, baseDuration]);
 
     function isMissingColumnError(error, tableName, columnName) {
         const message = (error?.message || "").toLowerCase();
@@ -155,7 +237,7 @@ export default function Timer({ duration }){ //defines the Timer component and r
    //reset logic
     const handleReset = ()=> {
         setStatus("running"); //restarts countdown immidiately
-        setTime(duration); //reset countdown
+        setTime(baseDuration); //reset countdown
         setElapsedSeconds(0); //clear elapsed tracking (for earned honeycombs)
         setStopModal(false);
     };
@@ -206,7 +288,7 @@ export default function Timer({ duration }){ //defines the Timer component and r
         }
 
         setStatus("idle"); 
-        setTime(duration);
+        setTime(baseDuration);
         setElapsedSeconds(0);
         setStopModal(false); //closes modal
         setResultModal({
@@ -257,29 +339,62 @@ export default function Timer({ duration }){ //defines the Timer component and r
         const formattedMinutes = String(minutes).padStart(2, "0");
         const formattedSeconds = String(seconds).padStart(2, "0");
 
-        return `${formattedMinutes} : ${formattedSeconds}` ; //returns the formatted time as a string
+        return `${formattedMinutes}:${formattedSeconds}` ; //returns the formatted time as a string
 
         
     };
 
-
+    const totalMs = baseDuration || duration;
+    const rawProgress = totalMs > 0 ? 1 - time / totalMs : 0;
+    const clampedProgress = Math.min(Math.max(rawProgress, 0), 1);
+    const progressAngle = clampedProgress * 360;
 
 //what users see goes here
     return (
         
     <div id="page">
+        <div className="timer-cloud timer-cloud-1" aria-hidden="true" />
+        <div className="timer-cloud timer-cloud-2" aria-hidden="true" />
+        <div className="timer-cloud timer-cloud-3" aria-hidden="true" />
         
         {/* displays the formatted version of the current time*/}
      
       <div id= "timerDisplayYellow">
 
-        
         <div id="timerDisplayWhite">
-     
-     
-      <box id="custom-timer"> {/* creates a box that time will go into, easy for styling purposes in scss */}
-        {getFormattedTime(time)} 
-        </box>
+
+        <div className="timer-presets" aria-label="Focus length presets">
+            {PRESET_OPTIONS.map((option) => (
+                <button
+                    key={option.value}
+                    type="button"
+                    className={[
+                        "timer-preset-button",
+                        selectedPreset === option.value ? "timer-preset-button--active" : "",
+                    ].join(" ")}
+                    onClick={() => handlePresetChange(option.value)}
+                    disabled={status !== "idle"}
+                >
+                    {option.label}
+                </button>
+            ))}
+        </div>
+
+        <div id="custom-timer"> {/* creates a box that time will go into, easy for styling purposes in scss */}
+            <div
+                className="timer-progress-ring"
+                aria-hidden="true"
+                style={{
+                    background: `radial-gradient(circle at center, #FFFAEF 60%, transparent 61%), conic-gradient(#F28A2F 0deg, #F28A2F ${progressAngle}deg, rgba(255, 211, 65, 0.2) ${progressAngle}deg, rgba(255, 211, 65, 0.2) 360deg)`,
+                }}
+            />
+            <div className="timer-icon-wrapper" aria-hidden="true">
+                <img src={bee} alt="" />
+            </div>
+            <div className="timer-time-text">
+                {getFormattedTime(time)}
+            </div>
+        </div>
 
 
        <div id="timer-controls"> 
@@ -319,37 +434,31 @@ export default function Timer({ duration }){ //defines the Timer component and r
        {/* modal that users will see when they click stop goes here. the 'e' represents an event within a function. */}
        {/* propragration is when the event that affects the parent, affects the children too. stoPropagation prevents this from happening, without it, it will cause a bug that clicking anywhere with the modal will close the modal */}
         {stopModal && (
-
-            
-
             <div className="Modal" onClick={toggleModal}>
-
-                
-
                 <div className="ModalBox" onClick={(e) => e.stopPropagation()}>
-                
-                
-                
-                <p>Stop this Session?</p>
-
-                <div className="ModalButtons">
-                <button onClick={handleStop}id="Stop"> Stop </button>
-
-                <button onClick= {handleReset} id="Reset"> Reset </button>
-
-                <button onClick = {() => {setStatus ("running"); setStopModal(false); }} id ="backButtonWrapper"> 
-                <img src ={backButton} alt="Back" />
-                </button>
-
-               </div>
-
-               
+                    <p>Stop this Session?</p>
+                    <div className="ModalButtons">
+                        <button onClick={handleStop} id="Stop">
+                            Stop
+                        </button>
+                        <button onClick={handleReset} id="Reset">
+                            Reset
+                        </button>
+                        <button
+                            onClick={() => {
+                                setStatus("running");
+                                setStopModal(false);
+                            }}
+                            id="backButtonWrapper"
+                        >
+                            <img src={backButton} alt="Back" />
+                        </button>
+                    </div>
+                </div>
+                <img src={sadBee} alt="sad" id="sadBee" />
+                <img src={twoFlowers} alt="twoFlowers" id="twoFlowers" />
+                <img src={beeLine} alt="beeLine" id="beeLine" />
             </div>
-            <img src = {sadBee} alt="sad" id="sadBee" />
-                <img src= {twoFlowers} alt="twoFlowers" id="twoFlowers"/>
-                <img src= {beeLine} alt="beeLine" id="beeLine"/>
-
-            </div>   
         )}
 
 
@@ -373,10 +482,6 @@ export default function Timer({ duration }){ //defines the Timer component and r
         )}
         </div>
 
-
-        {/*WIP Focus mode button for users to toggle --> havent worked on yet, for second milestone */}
-
-        <button id="Focus">Focus</button>
 
         {resultModal.open && (
             <div className="Modal" onClick={() => setResultModal({ open: false, message: "" })}>

@@ -8,19 +8,142 @@ $darkbrown: #23150A;
 $seafoam: #728972;
 $mint: darkseagreen;
 $mist: #ADA4AF;
+$pastel-input: lighten($honey, 28%);
 
 
 .Sign_In_Style{
     // Body style
-    background-color: $mint;      
+    background-color: $eggshell;      
     min-height: 100vh;
     width: 100%;             
     display: flex;          
-    align-items: flex-start;    
-    justify-content: center; 
-    padding: 40px 0 24px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start; 
+    padding: 0;
     box-sizing: border-box;
-    font-family: 'Calistoga', sans-serif;
+    font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    position: relative;
+    overflow: hidden;
+
+    .sign-in-header{
+        position: relative;
+        z-index: 10;
+        width: 100%;
+        padding: 16px 24px;
+        box-sizing: border-box;
+    }
+
+    .sign-in-header-inner{
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .sign-in-header-spacer{
+        display: none;
+    }
+
+    .sign-in-top-btn{
+        padding: 10px 24px;
+        min-width: 128px;
+        height: 42px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 999px;
+        border: none;
+        background: $seafoam;
+        color: white;
+        font-size: 1rem;
+        font-weight: 700;
+        cursor: pointer;
+        text-align: center;
+        line-height: 1;
+        transition: filter 0.15s ease, transform 0.15s ease;
+    }
+
+    .sign-in-top-btn--login{
+        background: lighten($honey, 16%);
+        color: $darkbrown;
+    }
+
+    .sign-in-top-btn--signup{
+  background: lighten($honey, 16%);
+  color: $darkbrown;
+    }
+
+    .sign-in-top-btn:hover{
+        filter: brightness(1.08);
+        transform: translateY(-1px);
+    }
+
+    .cloud{
+        position: absolute;
+        background: rgba(191, 233, 255, 0.85); // soft sky blue
+        border-radius: 999px;
+        filter: drop-shadow(0 8px 10px rgba(0, 0, 0, 0.08));
+        pointer-events: none;
+        z-index: 0;
+        opacity: 0.9;
+    }
+
+    .cloud::before,
+    .cloud::after{
+        content: "";
+        position: absolute;
+        background: inherit;
+        border-radius: 999px;
+    }
+
+    .cloud-1{
+        width: 220px;
+        height: 70px;
+        top: 34px;
+        left: -40px;
+        animation: cloudDrift 26s linear infinite;
+    }
+
+    .cloud-1::before{ width: 90px; height: 90px; left: 28px; top: -38px; }
+    .cloud-1::after{ width: 120px; height: 120px; left: 88px; top: -58px; }
+
+    .cloud-2{
+        width: 280px;
+        height: 86px;
+        top: 120px;
+        right: -90px;
+        animation: cloudDrift 32s linear infinite reverse;
+        opacity: 0.8;
+    }
+
+    .cloud-2::before{ width: 110px; height: 110px; left: 40px; top: -44px; }
+    .cloud-2::after{ width: 150px; height: 150px; left: 120px; top: -74px; }
+
+    .cloud-3{
+        width: 240px;
+        height: 78px;
+        top: 260px;
+        left: 12%;
+        animation: cloudBob 6.5s ease-in-out infinite;
+        opacity: 0.65;
+    }
+
+    .cloud-3::before{ width: 92px; height: 92px; left: 24px; top: -40px; }
+    .cloud-3::after{ width: 128px; height: 128px; left: 96px; top: -60px; }
+
+    @keyframes cloudDrift{
+        0%{ transform: translateX(0); }
+        50%{ transform: translateX(40px); }
+        100%{ transform: translateX(0); }
+    }
+
+    @keyframes cloudBob{
+        0%{ transform: translateY(0); }
+        50%{ transform: translateY(-10px); }
+        100%{ transform: translateY(0); }
+    }
 
     // Sign-up container
     .container{
@@ -36,19 +159,59 @@ $mist: #ADA4AF;
         margin: 0 auto;
         overflow: visible;
         border-radius: 10px;
-        outline: #532F2F dashed 6px;
-        box-shadow:  0 0 0 19.32px $honey; 
+        outline: none;
+        box-shadow: 0 18px 40px rgba(35, 21, 10, 0.12);
+        border: 1px solid rgba($chocolate, 0.12);
+        position: relative;
+        z-index: 1; // keep above clouds
+        margin-top: 40px;
     }
 
-    // Sign-up container background-pattern
     .container{
-        background-image: url('images/Hive_Pattern.png');
-        background-position: top right;
-        background-repeat:repeat-y;
-        background-size: 540.518px  439.838px;
+        background: $eggshell;
         height: auto;
     }
+
+    // (Removed) subtle hive pattern layer for a cleaner card
+
+    // Forest-like UI polish (Sign Up only): softer, cleaner, less busy.
+    &.Sign_In_Style--signup{
+        padding: 56px 0 30px;
+    }
+
+    &.Sign_In_Style--signup .container{
+        width: min(560px, calc(100% - 32px));
+        max-width: 560px;
+        min-width: 0;
+        padding: 34px 26px 22px;
+        border-radius: 22px;
+        outline: none;
+        box-shadow: 0 18px 40px rgba(35, 21, 10, 0.12);
+        border: 1px solid rgba($chocolate, 0.12);
+        background: $eggshell;
+    }
+
     
+    &.Sign_In_Style--signup .header{
+        margin-top: 0;
+        text-align: center;
+    }
+
+    &.Sign_In_Style--signup .text{
+        width: 100%;
+        justify-content: center;
+    }
+
+    &.Sign_In_Style--signup .subtitle,
+    &.Sign_In_Style--signup .subtitle-helper,
+    &.Sign_In_Style--signup .subtitle-detail{
+        width: auto;
+        max-width: 420px;
+        height: auto;
+        text-align: center;
+        margin: 0 auto;
+    }
+
 
 
     // Title Box
@@ -67,13 +230,12 @@ $mist: #ADA4AF;
     .text{
         display:flex;
         justify-content: center;
-        color: $royal;
-        // font-size: 48px;
-        // font-weight: 700;
-        font-family: "Pacifico", cursive;
-        font-weight: 400;
+        color: $chocolate;
+        font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        font-weight: 900;
         font-style: normal;
         font-size: 40.679px;
+        text-transform: lowercase;
 
     }
 
@@ -81,25 +243,93 @@ $mist: #ADA4AF;
     .subtitle{
         display: flex;
         justify-content: center;
-        padding-top: 10.6px;
-        width: 350px;
-        height: 20px;
-        border-radius: 9px;
         color: $chocolate;
         font-size: 18px;
+        font-weight: 700;
+        margin-top: 6px;
+    }
+
+    .subtitle-helper{
+        display: flex;
+        justify-content: center;
+        margin-top: 4px;
+        color: $chocolate;
+        font-size: 0.95rem;
+    }
+
+    .subtitle--context{
+        letter-spacing: 0.015em;
+    }
+
+    .subtitle-detail{
+        display: flex;
+        justify-content: center;
+        margin-top: 2px;
+        color: $chocolate;
+        font-size: 0.9rem;
     }
 
 
 
     // All info inputs and labels container
     .inputs{
-        margin-top: 25px;
-        margin-left: 20px;
-        margin-right: 20px;
+        margin-top: 18px;
+        margin-left: 0;
+        margin-right: 0;
         display: flex;
         flex-direction: column;
-        gap: 25px;
+        gap: 16px;
+        align-items: center;
         // border: 3px solid black;
+    }
+
+    &.Sign_In_Style--signup .inputs{
+        margin: 18px 0 0;
+        gap: 16px;
+    }
+
+    &.Sign_In_Style--signup .input_box p{
+        font-size: 0.95rem;
+        margin-bottom: 6px;
+    }
+
+    .input_box{
+        // margin: auto;
+        // padding-left: 10px;
+        // padding-right: 10px;
+        width: 100%;
+        max-width: 360px;
+        // border: 3px solid black;
+    }
+
+    .auth-inline-message{
+        margin: 0 0 6px;
+        padding: 12px 14px;
+        border-radius: 14px;
+        font-size: 0.95rem;
+        font-weight: 600;
+        line-height: 1.25rem;
+        border: 2px solid rgba($chocolate, 0.12);
+        background: rgba($cream, 0.75);
+        color: $chocolate;
+        width: 100%;
+        max-width: 360px;
+        box-sizing: border-box;
+    }
+
+    &.Sign_In_Style--signup .auth-inline-message{
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .auth-inline-message-success{
+        border-color: rgba($seafoam, 0.35);
+        background: rgba($seafoam, 0.12);
+    }
+
+    .auth-inline-message-error{
+        border-color: rgba($sunrise, 0.35);
+        background: rgba($sunrise, 0.10);
     }
 
     // Individual info inputs and labels containers
@@ -114,7 +344,16 @@ $mist: #ADA4AF;
     // labels
     .input_box p{
         color: $chocolate;
-        font-size: 18px;
+        font-size: 15.5px;
+        font-weight: 700;
+        letter-spacing: 0.2px;
+        margin: 0 0 8px;
+        text-align: center;
+    }
+
+    &.Sign_In_Style--signup .input_box p{
+        font-size: 0.95rem;
+        margin-bottom: 6px;
     }
 
     // Inputs
@@ -126,8 +365,10 @@ $mist: #ADA4AF;
         width: 100%;
         // width: 495px;
         // height: 70px;
-        background: $cream;
-        border-radius: 40px;
+        background: $pastel-input;
+        border: 1px solid rgba($chocolate, 0.16);
+        border-radius: 16px;
+        padding: 0 14px;
         // border: 3px solid black;
     }
 
@@ -142,17 +383,19 @@ $mist: #ADA4AF;
         color: $chocolate;
         // font-size: 18.5px;
         font-size: 18px;
-        font-family: 'Calistoga', sans-serif;
+        font-weight: 600;
+        font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        padding: 0 14px 0 0;
         //padding: 10px;
         flex: 1;
         // border: 3px solid black;
     }
     
-    // Input box icons
+    // Input box icons (Font Awesome)
     .input i{
-        margin: 0px 30px;
-        font-size: 20px;
-        color: gray;
+        margin: 0 12px 0 4px;
+        font-size: 18px;
+        color: rgba($chocolate, 0.55);
         // border: 3px solid black;
     }
 
@@ -164,8 +407,10 @@ $mist: #ADA4AF;
         width: 100%;
         // width: 495px;
         // height: 70px;
-        background: $cream;
-        border-radius: 40px;
+        background: $pastel-input;
+        border: 1px solid rgba($chocolate, 0.16);
+        border-radius: 16px;
+        padding: 0 14px;
         // border: 3px solid black;
     }
 
@@ -179,17 +424,50 @@ $mist: #ADA4AF;
         color: $chocolate;
         // font-size: 18.5px;
         font-size: 18px;
-        font-family: 'Calistoga', sans-serif;
+        font-weight: 600;
+        font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        padding: 0 14px 0 0;
         //padding: 10px;
         flex: 1;
         // border: 3px solid black;
     }
 
     .input2 i{
-        margin: 0px 30px;
-        font-size: 20px;
-        color: gray;
+        margin: 0 12px 0 4px;
+        font-size: 18px;
+        color: rgba($chocolate, 0.55);
         // border: 3px solid black;
+    }
+
+    .password-toggle-icon{
+        color: rgba($chocolate, 0.55);
+        font-size: 14px;
+        margin-left: 8px;
+        margin-right: 8px;
+    }
+
+    .input input,
+    .input2 input{
+        font-size: 16px;
+    }
+
+    .input input::placeholder,
+    .input2 input::placeholder{
+        color: rgba($chocolate, 0.55);
+    }
+
+    .input:focus-within,
+    .input2:focus-within{
+        border-color: rgba($sunrise, 0.65);
+        box-shadow: 0 0 0 4px rgba($sunrise, 0.18);
+    }
+
+    // Keep browser autofill from forcing unreadable colors
+    .input input:-webkit-autofill,
+    .input2 input:-webkit-autofill{
+        -webkit-text-fill-color: $chocolate;
+        transition: background-color 9999s ease-in-out 0s;
+        box-shadow: 0 0 0px 1000px $pastel-input inset;
     }
 
     .password-toggle-icon {
@@ -212,17 +490,33 @@ $mist: #ADA4AF;
 // Remember account and forgot password container
     .forgot-container{
         display: flex;
-        // gap: 200px;
-        margin: 15px auto;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin: 15px auto 0;
         font-size: 16.5px;
         // border: black 5px solid;
         width: 100%;
+        max-width: 360px;
+        text-align: center;
+    }
+
+    &.Sign_In_Style--signup .forgot-container{
+        margin: 10px 0 0;
+        font-size: 0.95rem;
+        width: 100%;
+        max-width: 360px;
+        margin-left: auto;
+        margin-right: auto;
+        justify-content: center;
     }
 
     // remember me container
     .remember-password{
-        padding-left: 10px;
+        padding-left: 0;
         display: flex;
+        align-items: center;
+        gap: 6px;
         color: $chocolate;
         // border: 8px solid black;
     }
@@ -234,37 +528,27 @@ $mist: #ADA4AF;
 
     // forgot password container
     .forgot-password{
-        margin-left: 47%;
+        margin-left: 0;
+        margin-top: 4px;
         display: flex;
+        justify-content: center;
         // border: 8px solid black;
     }
 
-    // forgot password link style
-    .forgot-password a:link{
-        color: $sunrise;
-        background-color: transparent;
-        text-decoration: none;
-    }
-
-    // forgot password hover over link style
-    .forgot-password a:hover{
-        color: orangered;
-        background-color: transparent;
-        text-decoration: underline;
-    }
-
     .forgot-password-link{
-        color: $sunrise;
+        color: $chocolate;
         background: transparent;
         border: none;
         padding: 0;
         font: inherit;
+        font-weight: 600;
+        letter-spacing: 0.02em;
         cursor: pointer;
-        text-decoration: none;
+        text-decoration: underline;
     }
 
     .forgot-password-link:hover{
-        color: orangered;
+        color: $darkbrown;
         text-decoration: underline;
     }
 
@@ -275,6 +559,10 @@ $mist: #ADA4AF;
         display: flex;
         justify-content: center;
         margin: 30px;
+        width: 100%;
+        max-width: 360px;
+        margin-left: auto;
+        margin-right: auto;
     }
 
     // Button style
@@ -282,15 +570,67 @@ $mist: #ADA4AF;
         display: flex;
         justify-content: center;
         align-items: center;
-        width: 240px; 
-        height: 52px;
+        width: 100%;
+        height: 54px;
         color: white;
         background: $sunrise;
-        border-radius: 50px;
+        border-radius: 16px;
+        border: none;
         font-size: 19px;
         font-weight: 700;
         cursor: pointer;
-        box-shadow: 0 8px 6px 0 rgba(0, 0, 0, 0.25);
+        box-shadow: 0 10px 24px rgba(35, 21, 10, 0.18);
+        transition: transform 0.15s ease, filter 0.15s ease, opacity 0.15s ease;
+    }
+
+    .submit--signup{
+        background: lighten($honey, 16%);
+        color: $darkbrown;
+    }
+
+    .submit--login{
+        background: lighten($honey, 16%);
+        color: $darkbrown;
+    }
+
+    &.Sign_In_Style--signup .submit-container{
+        margin: 18px 0 0;
+        width: 100%;
+        max-width: 360px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    &.Sign_In_Style--signup .submit{
+        width: 100%;
+        max-width: none;
+    }
+
+    .submit:hover{
+        filter: brightness(1.02);
+        transform: translateY(-1px);
+    }
+
+    .submit:active{
+        transform: translateY(0);
+    }
+
+    .submit:disabled{
+        opacity: 0.7;
+        cursor: not-allowed;
+        transform: none;
+        filter: none;
+    }
+
+    .signup-helper{
+        padding-left: 10px;
+        padding-right: 10px;
+        margin-top: -6px;
+        display: flex;
+        align-items: center;
+        color: rgba($chocolate, 0.7);
+        font-size: 0.95rem;
+        font-weight: 600;
     }
 
 
@@ -300,6 +640,10 @@ $mist: #ADA4AF;
         display: flex;
         justify-content: center;
         align-items: flex-start;
+    }
+
+    &.Sign_In_Style--signup .page-change{
+        margin-top: 12px;
     }
     // Sign-Up link
     .Sign-Up span{
@@ -359,6 +703,10 @@ $mist: #ADA4AF;
         padding: 10.6px 20px 0;
     }
 
+    .forgot-password-page .subtitle--context{
+        color: $chocolate;
+    }
+
     .auth-message{
         margin: 0 20px;
         text-align: center;
@@ -390,14 +738,13 @@ $mist: #ADA4AF;
     
     // Container Side Decorations
     .side-decor{
-        // border: 10px solid black;
         position: relative;
     }
 
     .side-decor img{
-        // border: 10px solid black;
         position: absolute;
         display:block;
+        pointer-events: none;
     }
 
      // Login page decor
@@ -540,6 +887,72 @@ $mist: #ADA4AF;
         height: 283px;
         left: 96.5%;
         bottom: -2.75rem;
+    }
+
+    .bee {
+        position: absolute;
+        display: block;
+        pointer-events: none;
+        will-change: transform;
+    }
+
+    .bee-float {
+        animation: beeFloat 3.8s ease-in-out infinite;
+    }
+
+    .bee-buzz {
+        animation: beeBuzz 1.25s ease-in-out infinite;
+    }
+
+    @keyframes beeFloat {
+        0% { transform: translateY(0) rotate(-2deg); }
+        50% { transform: translateY(-10px) rotate(2deg); }
+        100% { transform: translateY(0) rotate(-2deg); }
+    }
+
+    @keyframes beeBuzz {
+        0% { transform: translate(0, 0) rotate(0deg); }
+        25% { transform: translate(2px, -2px) rotate(1deg); }
+        50% { transform: translate(0, -3px) rotate(0deg); }
+        75% { transform: translate(-2px, -1px) rotate(-1deg); }
+        100% { transform: translate(0, 0) rotate(0deg); }
+    }
+
+    // Sign-up page bees (original positions)
+    #left-bee{
+        width: 122px;
+        height: auto;
+        left: -18.5%;
+        top: -30rem;
+        animation-delay: 0.15s;
+    }
+
+    #top-bee{
+        width: 108px;
+        height: auto;
+        left: 78%;
+        top: -60.5rem;
+    }
+
+    #right-bee{
+        width: 135px;
+        height: auto;
+        left: 96.5%;
+        bottom: 7.75rem;
+        animation-delay: 0.35s;
+    }
+
+    // Slightly raise bees for shorter Forgot Password card
+    .forgot-password-page .side-decor--forgot #left-bee{
+        top: -26rem;
+    }
+
+    .forgot-password-page .side-decor--forgot #top-bee{
+        top: -52rem;
+    }
+
+    .forgot-password-page .side-decor--forgot #right-bee{
+        bottom: 9.5rem;
     }
 }
 

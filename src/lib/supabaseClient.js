@@ -11,3 +11,8 @@ if (!supabaseUrl || !supabaseAnonKey) {
 }
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
+/** Same as VITE_SUPABASE_URL — use for Edge Function URLs (must match deployed project). */
+export const SUPABASE_URL = supabaseUrl ?? "";
+/** Same as VITE_SUPABASE_ANON_KEY (or publishable key) — used for direct function fetches. */
+export const SUPABASE_ANON_KEY = supabaseAnonKey ?? "";
+

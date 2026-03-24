@@ -13,26 +13,104 @@ $mist: #ADA4AF;
     *{
         margin: 0;
         padding: 0;
-        font-family: 'Calistoga', sans-serif;
+        font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
         box-sizing: border-box;
     }
 
+    // full-page backdrop similar to Notion + Sign In
+    background-color: $eggshell;
+    background-image: radial-gradient(circle at top left, #ffe2ff 0, transparent 55%), radial-gradient(circle at bottom right, #d6f4ff 0, transparent 55%);
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    position: relative;
+    overflow: hidden;
+    padding: 24px 20px 32px;
+    box-sizing: border-box;
+
     /* Todo List Title */
     h2 {
-        font-family: "Pacifico", cursive;
-        font-weight: 400;
+        font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        font-weight: 600;
         font-style: normal;
         font-size: 40.679px;
     }
-    /* Backdrop */
+
+    // floating cloud shapes (matched to Sign_In look)
+    .cloud{
+        position: absolute;
+        background: rgba(191, 233, 255, 0.85);
+        border-radius: 999px;
+        filter: drop-shadow(0 8px 10px rgba(0, 0, 0, 0.08));
+        pointer-events: none;
+        z-index: 0;
+        opacity: 0.9;
+    }
+
+    .cloud::before,
+    .cloud::after{
+        content: "";
+        position: absolute;
+        background: inherit;
+        border-radius: 999px;
+    }
+
+    .cloud-1{
+        width: 220px;
+        height: 70px;
+        top: 34px;
+        left: -40px;
+        animation: todoCloudDrift 26s linear infinite;
+    }
+
+    .cloud-1::before{ width: 90px; height: 90px; left: 28px; top: -38px; }
+    .cloud-1::after{ width: 120px; height: 120px; left: 88px; top: -58px; }
+
+    .cloud-2{
+        width: 280px;
+        height: 86px;
+        top: 120px;
+        right: -90px;
+        animation: todoCloudDrift 32s linear infinite reverse;
+        opacity: 0.8;
+    }
+
+    .cloud-2::before{ width: 110px; height: 110px; left: 40px; top: -44px; }
+    .cloud-2::after{ width: 150px; height: 150px; left: 120px; top: -74px; }
+
+    .cloud-3{
+        width: 240px;
+        height: 78px;
+        top: 260px;
+        left: 12%;
+        animation: todoCloudBob 6.5s ease-in-out infinite;
+        opacity: 0.65;
+    }
+
+    .cloud-3::before{ width: 92px; height: 92px; left: 24px; top: -40px; }
+    .cloud-3::after{ width: 128px; height: 128px; left: 96px; top: -60px; }
+
+    @keyframes todoCloudDrift{
+        0%{ transform: translateX(0); }
+        50%{ transform: translateX(40px); }
+        100%{ transform: translateX(0); }
+    }
+
+    @keyframes todoCloudBob{
+        0%{ transform: translateY(0); }
+        50%{ transform: translateY(-10px); }
+        100%{ transform: translateY(0); }
+    }
+
+    /* Backdrop content container */
     .container{
-        // border: 10px solid black;
         width: 100%;
-        min-height: 100vh;
-        height: 100%;
-        // background: linear-gradient(135deg, #153677, #4e085f);
-        background: $mint;
-        padding: 10px;
+        max-width: 1200px;
+        padding-top: 64px;
+        z-index: 1; // above clouds
     }
 
     /* body {
@@ -55,249 +133,333 @@ $mist: #ADA4AF;
 
 
 
-    /* todo app container */
-    .todo-app{
-        // border: 10px solid black;
-        position: relative;
-        width: 100%;
-        max-width: 540px;
-        min-width: 300px;
-        background: #FFFAEF;
-        margin: 100px auto 20px;
-        padding: 40px 30px 70px;
-        border-radius: 10px;
-        outline: #532F2F dashed 6px;
-        box-shadow:  0 0 0 19.32px $honey;  /* Outer blue "outline", total width 12px */
+    .todo-layout{
+        max-width: 1120px;
+        margin: 40px auto 16px;
     }
-    /* Todo list Backround - If the background image had to repeat as it grew*/
-    .todo-app{
-        background-image: url('images/Hive_Pattern.png');
-        background-position: top right;
-        background-repeat:repeat-y;
-        background-size: 540.518px  439.838px;
-        height: auto;
-    } 
 
-    /* List Box */
-    #list-container{
-        /* border: 3px solid black; */
-        overflow:scroll;
-        width: 490px;
-        height: 200px;
-    }
-    /* Container box for bee and title */
-    .title{
+    .todo-calendar-shell{
+        background: #ffffff;
+        border-radius: 16px;
+        padding: 20px 20px 24px;
+        box-shadow: 0 18px 40px rgba($darkbrown, 0.16);
+        border: 1px solid rgba($chocolate, 0.12);
         position: relative;
+    }
+
+    .todo-calendar{
+        margin-bottom: 20px;
+    }
+
+    .todo-calendar-header{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        margin-bottom: 8px;
+    }
+
+    .todo-calendar-title{
+        flex: 1;
+        text-align: center;
+        font-weight: 600;
+        color: $chocolate;
+    }
+
+    .todo-calendar-nav-button{
+        padding: 6px 10px;
+        border-radius: 999px;
+        border: 1px solid rgba($chocolate, 0.2);
+        background: transparent;
+        color: $chocolate;
+        font-size: 1rem;
+        line-height: 1;
+    }
+
+    .todo-calendar-weekdays{
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: $mist;
+        margin-bottom: 4px;
+    }
+
+    .todo-calendar-weekday{
+        text-align: center;
+    }
+
+    .todo-calendar-grid{
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 4px;
+    }
+
+    .todo-calendar-day{
+        padding: 4px;
+        border-radius: 0;
+        border: 1px solid rgba($chocolate, 0.12);
+        background: transparent;
+        color: $chocolate;
+        font-size: 0.85rem;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        justify-content: flex-start;
+        aspect-ratio: 1;
+        min-height: 0;
+        cursor: pointer;
+        transition: filter 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+    }
+
+    .todo-calendar-day-header{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 4px;
+        gap: 4px;
+    }
+
+    .todo-calendar-day-number{
+        font-size: 0.95rem;
+        font-weight: 600;
+    }
+
+    .todo-calendar-day-add{
+        border: none;
+        background: transparent;
+        color: $mist;
+        font-size: 0.9rem;
+        width: 20px;
+        height: 20px;
+        border-radius: 999px;
+        cursor: pointer;
+        line-height: 1;
         display: flex;
         align-items: center;
         justify-content: center;
-        flex-direction: row;
-        flex-wrap: wrap;
-        gap: 12px;
-        /* border: 3px solid black; */
-    }
-    /* ToDo List Title */
-    .title h2{
-        color: #4B2F53;
-        margin-bottom: 20px;
-        /* border: 3px solid black; */
-    }
-    /* Bee */
-    .title img{
-        position: absolute;
-        left: 50%;
-        transform: translateX(-300px) translateY(-90px);
-        /* width: 197.8px;
-        height: 161.703px; */
-        width: 439.873px;
-        /* border: 3px solid black; */
-        pointer-events: none;
+        padding: 0;
     }
 
-    /* Add your text backdrop */
-    .row{
-        // border: 10px solid black;
+    .todo-calendar-day-add:hover{
+        background: rgba($sunrise, 0.12);
+        color: $chocolate;
+    }
+
+    .todo-calendar-day-tasks{
+        list-style: none;
+        margin: 0;
+        padding: 0;
         display: flex;
-        position: relative;
-        z-index: 2;
-        width: 100%;
-        align-items: center;
-        justify-content: space-between;
-        background: #FFE9BE;
-        border-radius: 30px;
-        padding-left: 20px;
-        margin-bottom: 25px;
-        // border: black 5px solid;
+        flex-direction: column;
+        gap: 3px;
+        flex: 1;
+        min-height: 0;
+        overflow: auto;
     }
 
-    /* input section where you type your task. */
-    input{
+    .todo-calendar-task{
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 6px;
+        padding: 4px 4px 4px 2px;
+        border-radius: 6px;
+        border: none;
+        background: rgba($royal, 0.04);
+        font-size: 0.72rem;
+        cursor: pointer;
+    }
+
+    .todo-calendar-task-check{
+        flex-shrink: 0;
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        border: 2px solid rgba($chocolate, 0.4);
+        background: transparent;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+        cursor: pointer;
+        transition: background 0.15s ease, border-color 0.15s ease;
+    }
+
+    .todo-calendar-task-check:hover{
+        border-color: rgba($chocolate, 0.7);
+        background: rgba($chocolate, 0.08);
+    }
+
+    .todo-calendar-task-check-icon{
+        font-size: 0.7rem;
+        font-weight: 700;
+        color: #fff;
+        line-height: 1;
+    }
+
+    .todo-calendar-task--completed .todo-calendar-task-check{
+        background: $seafoam;
+        border-color: $seafoam;
+    }
+
+    .todo-calendar-task--completed .todo-calendar-task-check:hover{
+        background: darken($seafoam, 6%);
+        border-color: darken($seafoam, 6%);
+    }
+
+    .todo-calendar-task-text{
         flex: 1;
-        width: 75%;
+        min-width: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .todo-calendar-task-delete{
+        border: none;
+        background: transparent;
+        color: $mist;
+        font-size: 0.8rem;
+        cursor: pointer;
+        padding: 0 2px;
+    }
+
+    .todo-calendar-task-delete:hover{
+        color: $chocolate;
+    }
+
+    .todo-calendar-task--completed{
+        text-decoration: line-through;
+        color: $mist;
+        opacity: 0.85;
+    }
+
+    .todo-calendar-more{
+        font-size: 0.7rem;
+        color: $mist;
+    }
+
+    .todo-calendar-day--selected{
+        background: rgba($royal, 0.04);
+        border-color: rgba($royal, 0.35);
+        box-shadow: inset 0 0 0 1px rgba($royal, 0.12);
+    }
+
+    .todo-calendar-day--today{
+        border-color: rgba($sunrise, 0.8);
+    }
+
+    .todo-calendar-day--outside-month{
+        background: #f5f5f7;
+        color: $mist;
+    }
+
+    .todo-calendar-day--has-tasks{
+        border-color: rgba($royal, 0.4);
+    }
+
+    /* color variants for tasks */
+    .todo-calendar-task--blue{
+        background: #d6e4ff;
+        color: #1c2b4a;
+    }
+
+    .todo-calendar-task--green{
+        background: #d7f2e3;
+        color: #19422e;
+    }
+
+    .todo-calendar-task--purple{
+        background: #eadcff;
+        color: #312252;
+    }
+
+    .todo-calendar-task--yellow{
+        background: #fff3c8;
+        color: #584108;
+    }
+
+    .todo-calendar-task--red{
+        background: #ffe0e0;
+        color: #5f1b1b;
+    }
+
+    /* inline composer inside day cells */
+    .todo-inline-composer{
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        padding: 4px 4px 6px;
+        border-radius: 8px;
+        background: #f5f5f7;
+        margin-bottom: 2px;
+    }
+
+    .todo-inline-input{
+        width: 100%;
         border: none;
         outline: none;
         background: transparent;
-        padding: 10px;
-        font-weight: 14px;
-        font-size: 17.797px;
-        color: #532F2F
+        padding: 4px 2px;
+        font-size: 0.75rem;
+        color: $chocolate;
     }
 
-    input::placeholder{
-        color: gray;
+    .todo-inline-input::placeholder{
+        color: $mist;
     }
 
-    /* Add task button */
-    button{
-        border:none;
-        outline:none;
-        padding: 16px 50px;
-        background: #F28A2F;
+    .todo-inline-controls{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 6px;
+    }
+
+    .todo-inline-colors{
+        display: flex;
+        gap: 4px;
+    }
+
+    .todo-inline-color-dot{
+        width: 14px;
+        height: 14px;
+        border-radius: 999px;
+        border: 2px solid transparent;
+        padding: 0;
+        cursor: pointer;
+    }
+
+    .todo-inline-color-dot--blue{ background: #d6e4ff; }
+    .todo-inline-color-dot--green{ background: #d7f2e3; }
+    .todo-inline-color-dot--purple{ background: #eadcff; }
+    .todo-inline-color-dot--yellow{ background: #fff3c8; }
+    .todo-inline-color-dot--red{ background: #ffe0e0; }
+
+    .todo-inline-color-dot--selected{
+        box-shadow: 0 0 0 1px #ffffff, 0 0 0 2px rgba($royal, 0.6);
+    }
+
+    .todo-inline-add{
+        border: none;
+        outline: none;
+        padding: 4px 10px;
+        border-radius: 999px;
+        background: $sunrise;
         color: #fff;
-        font-size: 17.797px;
+        font-size: 0.7rem;
+        font-weight: 600;
         cursor: pointer;
-        border-radius: 40px;
     }
 
-    #list-container{
-        // border:black 5px solid;
-        width: 100%;
-    }
-    /* List Item */
-    ol li{
-        list-style:none;
-        font-size: 20.339px;
-        padding: 12px 8px 12px 50px;
-        user-select: none;
-        cursor: pointer;
-        position: relative;
-        color: #532F2F;
-        // border:black 5px solid;
-    }
-    /* Unfilled circle */
-    #list-container li::before{
-        content: '';
-        position: absolute;
-        height: 28px;
-        width: 28px;
-        border-radius: 50%;
-        background-image: url(images/Unfilled-Circle.png);
-        background-size: cover;
-        background-position: center;
-        top: 12px;
-        left: 8px;
-
-    }
-    /* Line through the word */
-    #list-container li.checked{
-        color: #ADA4AF;
-        text-decoration: line-through;
-        text-decoration-color:#532F2F;
-    }
-    /* Filled */
-    #list-container li.checked::before{
-        background-image: url(images/Checked-Circle.png);
-    }
-
-    /* Actual X Button */
-    #list-container li span{
-        position: absolute;
-        right: 0;
-        top: 5px;
-        width: 40px;
-        height: 40px;
-        font-size: 22px;
-        color: #4B2F53;
-        line-height: 40px;
+    .todo-error{
+        color: #b00020;
+        margin: 10px 0 0;
+        font-size: 0.85rem;
         text-align: center;
-        border-radius: 50%;
     }
 
-    /* X button hover color */
-    #list-container li span:hover{
-        background: #edeef0;
-    }
-
-    // Container Side Decorations
-    .side-decor{
-        // border: 10px solid black;
-        position: relative;
-    }
-
-    .side-decor img{
-        // border: 10px solid black;
-        position: absolute;
-        display:block;
-        pointer-events: none;
-    }
-
-    #drip1 {
-        // display: block;
-        // position: absolute;
-        width: 95px;
-        height: 60px;
-        left: -1%;
-        bottom: -8.5rem;
-    }
-    #drip2 {
-        // display: block;
-        // position: absolute;
-        width: 88px;
-        height: 35px;
-        left: 45%;
-        bottom: -7.1rem;
-    }
-    #drip3 {
-        // display: block;
-        // position: absolute;
-        width: 62px;
-        height: 61px;
-        left: 87%;
-        bottom: -8.8rem;
-    }
-
-    #left-drip{
-        width: 35px;
-        height: 64px;
-        left: -73px;
-        top: -12rem;
-    }
-
-    #left-flower{
-        width: 63px;
-        height: 64px;
-        left: -90px;
-        top: -0.8rem;
-        transform: rotate(-25deg);
-    }
-
-    #two-flowers {
-        width: 107px;
-        height: 128px;
-        left: 80%;
-        top: -31rem;
-    }
-
-    #right-drip {
-        width: 30px;
-        height: 60px;
-        left: 109.5%;
-        bottom: 19rem;
-        transform: rotate(4deg);
-    }
-
-    #purple-flower {
-        width: 49px;
-        height: 50px;
-        left: 105.5%;
-        bottom: 8.5rem;
-        transform: rotate(-18deg);
-    }
-
-    #white-flower {
-        width: 113px;
-        height: 213px;
-        left: 103.6%;
-        bottom: -4.75rem;
-    }
+    /* the decorative drips/flowers are removed for a cleaner full-calendar layout */
 }

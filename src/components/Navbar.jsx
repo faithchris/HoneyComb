@@ -1,13 +1,24 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { getCurrentSession, onAuthStateChange, signOutUser } from "../lib/authentication";
 import { supabase } from "../lib/supabaseClient";
 import "../styles/Navbar.scss";
 
-export function Navbar() {
+export function Navbar({ isCollapsed, onToggleCollapsed }) {
   const [session, setSession] = useState(null);
   const [honeycombBalance, setHoneycombBalance] = useState(0);
+  const location = useLocation();
   const navigate = useNavigate();
+
+  function isActive(path) {
+    if (path === "/") return location.pathname === "/" || location.pathname === "";
+    return location.pathname === path;
+  }
+
+  async function handleLogout() {
+    await signOutUser();
+    navigate("/Sign_In", { replace: true });
+  }
 
   useEffect(() => {
     let isMounted = true;
@@ -108,44 +119,63 @@ export function Navbar() {
     setHoneycombBalance(legacyData?.points ?? 0);
   }
 
-  async function handleLogout() {
-    await signOutUser();
-    setHoneycombBalance(0);
-    navigate("/Sign_In", { replace: true });
-  }
-
   return (
-    <nav className="navbar">
+    <nav className={`navbar navbar--sidebar ${isCollapsed ? "navbar--collapsed" : ""}`} aria-label="Main navigation">
+      <button
+        type="button"
+        className="navbar-toggle"
+        onClick={onToggleCollapsed}
+        aria-expanded={!isCollapsed}
+        aria-label={isCollapsed ? "Show navigation" : "Hide navigation"}
+        title={isCollapsed ? "Show nav" : "Hide nav"}
+      >
+        {isCollapsed ? (
+          <span className="navbar-toggle-icon" aria-hidden="true">›</span>
+        ) : (
+          <span className="navbar-toggle-icon" aria-hidden="true">‹</span>
+        )}
+      </button>
       {session ? (
         <>
+          <div className="navbar-header">
+            <div className="navbar-brand">
+              <img src="images/Test_Bee_Logo2.png" alt="" className="navbar-brand-bee" aria-hidden="true" />
+              <span className="navbar-brand-text">honeycomb</span>
+            </div>
+            <div className="honeycomb-tracker" aria-live="polite">
+              Honeycombs: {honeycombBalance}
+            </div>
+          </div>
           <div className="navbar-links">
-            <Link to="/">
-              <button className="navbar-button">Home</button>
+            <Link to="/" className={`navbar-link ${isActive("/") ? "navbar-link--active" : ""}`}>
+              Home
             </Link>
-            <Link to="/Todo">
-              <button className="navbar-button">Todo</button>
+            <Link to="/Todo" className={`navbar-link ${isActive("/Todo") ? "navbar-link--active" : ""}`}>
+              Todo
             </Link>
-            <Link to="/Timer">
-              <button className="navbar-button">Timer</button>
+            <Link to="/Timer" className={`navbar-link ${isActive("/Timer") ? "navbar-link--active" : ""}`}>
+              Focus
             </Link>
-            <Link to="/Shop">
-              <button className="navbar-button">Shop</button>
+            <Link to="/Shop" className={`navbar-link ${isActive("/Shop") ? "navbar-link--active" : ""}`}>
+              Shop
             </Link>
-            <button className="navbar-button" onClick={handleLogout}>
+            <Link to="/Account" className={`navbar-link ${isActive("/Account") ? "navbar-link--active" : ""}`}>
+              Account
+            </Link>
+          </div>
+          <div className="navbar-footer">
+            <button type="button" className="navbar-logout" onClick={handleLogout}>
               Logout
             </button>
-          </div>
-          <div className="honeycomb-tracker" aria-live="polite">
-            Honeycombs: {honeycombBalance}
           </div>
         </>
       ) : (
         <div className="navbar-links">
-          <Link to="/Sign_In?mode=signup">
-            <button className="navbar-button">Sign Up</button>
+          <Link to="/Sign_In?mode=signup" className="navbar-link">
+            Sign Up
           </Link>
-          <Link to="/Sign_In?mode=login">
-            <button className="navbar-button">Log In</button>
+          <Link to="/Sign_In?mode=login" className="navbar-link">
+            Log In
           </Link>
         </div>
       )}
